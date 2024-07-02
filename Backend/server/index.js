@@ -3,6 +3,7 @@ const app = express();
 const PORT = 5000;
 const cors = require('cors')
 const db=require("../DataBase/index.js")
+const instructorRoutes = require('../Routes/Instructor');
 
 
 app.use(cors())
@@ -12,6 +13,8 @@ app.use(express.urlencoded({extended:true}));
 
 
 
+
+app.use("/api",instructorRoutes)
 
 
 
