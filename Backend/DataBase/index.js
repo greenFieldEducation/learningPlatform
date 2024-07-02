@@ -1,20 +1,28 @@
-const { Sequelize } = require  ('sequelize');
+const { Sequelize } = require('sequelize');
 
-
-const sequelize = new Sequelize('GreenField2','root','Troll1996@@',{
-    host:'localhost',
-    dialect:'mysql'
+const sequelize = new Sequelize('greenfield2', 'root', 'root', {
+    host: 'localhost',
+    dialect: 'mysql',
+    define: {
+        timestamps: false,
+      },
 });
 
-async function testConnection(){
+sequelize.sync({force: true}) 
+  .then(() => {
+    console.log('Database & tables created!');
+  })
+  .catch(error => console.error('Unable to create tables:', error));
+
+async function testConnection() {
     try {
         await sequelize.authenticate();
-        console.log("connection established succefully")
-    } catch (error){
-        console.log("unable to connect to database")
+        console.log("Connection established successfully");
+    } catch (error) {
+        console.log("Unable to connect to the database:", error);
     }
 }
 
 testConnection();
 
-module.exports=sequelize;
+module.exports = sequelize;
