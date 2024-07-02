@@ -1,9 +1,6 @@
 const { Sequelize, DataTypes, Model } = require('sequelize');
+const {sequelize} = require ('../index.js')
 
-const sequelize = new Sequelize('GreenField2','root','root',{
-    host:'localhost',
-    dialect:'mysql'
-});
 
 const Courses = sequelize.define("course", {
     title: {
