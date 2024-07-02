@@ -1,32 +1,35 @@
-const { DataTypes } = require("sequelize");
-const sequelize = require("..");
+const { DataTypes } = require('sequelize');
+const sequelize = require('../index');
+// console.log(sequelize,"hello")
 
-module.exports=(sequelize,DataTypes)=>{
-
-    const Instructor= sequelize.define("Instructor",{
-        username:{
-            type: DataTypes.STRING,
-            allowNull: false,
-            unique: true,
-        },
-        email:{
-            type:DataTypes.STRING,
-            allowNull: false,
-            unique: true,
-        },
-        password:{
-            type:DataTypes.STRING,
-            allowNull: false
-        },
-        Gender:{
-            enum : ["Men","Women"]
-        },
-        PhoneNumber:NUMBER,
-        id: {
-            type: DataTypes.INTEGER,
-            primaryKey: true,
-            allowNull: false,
-            autoIncrement: true,
-          }
-    })
-}
+const Instructor = sequelize.define('Instructor', {
+    id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        allowNull: false,
+        autoIncrement: true,
+    },
+    username: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        unique: true,
+    },
+    email: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        unique: true,
+    },
+    password: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
+    gender: {
+        type: DataTypes.ENUM,
+        values: ['Men', 'Women'],
+    },
+    phoneNumber: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
+});
+module.exports = Instructor;
