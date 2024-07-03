@@ -1,13 +1,16 @@
-import { useState } from 'react'
-import './App.css'
-
+import React from 'react'
+import './index.css'
+import { BrowserRouter as Router , Route , Routes } from 'react-router-dom'
+import LandingPage from '../src/pages/LandingPage.jsx'
 function App() {
  
 
   return (
-    <div>
-      <h1>Hello</h1>
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<LandingPage />} />
+      </Routes>
+    </Router>
   )
 }
 

@@ -19,6 +19,9 @@ const Instructor = sequelize.define('Instructor', {
         allowNull: false,
         unique: true,
     },
+    image :{
+        type: DataTypes.STRING,
+    },
     password: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -32,4 +35,8 @@ const Instructor = sequelize.define('Instructor', {
         allowNull: false,
     },
 });
+
+// Define Associations
+Instructor.hasMany(Course, { foreignKey: 'instructorId' });
+
 module.exports = Instructor;
