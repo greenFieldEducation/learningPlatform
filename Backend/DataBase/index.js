@@ -3,16 +3,16 @@ const { Sequelize } = require('sequelize');
 const sequelize = new Sequelize('greenfield2', 'root', 'root', {
     host: 'localhost',
     dialect: 'mysql',
-    define: {
-        timestamps: false,
-      },
+    // define: {
+    //     timestamps: false,
+    //   },
 });
 
-sequelize.sync({force: true}) 
-  .then(() => {
-    console.log('Database & tables created!');
-  })
-  .catch(error => console.error('Unable to create tables:', error));
+// sequelize.sync({force: true}) 
+//   .then(() => {
+//     console.log('Database & tables created!');
+//   })
+//   .catch(error => console.error('Unable to create tables:', error));
 
 async function testConnection() {
     try {
