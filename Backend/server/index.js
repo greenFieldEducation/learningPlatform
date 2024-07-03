@@ -6,21 +6,17 @@ const cors = require('cors')
 const db=require("../DataBase/index.js")
 const studentrouter=require("../Routes/Students.js")
 const instructorRoutes = require('../Routes/Instructor');
-const cloudinary = require("../Cloudinary/Cloudinary.js")
-const studentregisterrouter=require("../Routes/register.js")
 const enrollementRoute = require("../Routes/enrollementRoutes.js")
-
+const Authentication = require('../Routes/Authentication.js')
 
 app.use(cors())
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 app.use("/api/student",studentrouter)
 app.use("/api",instructorRoutes)
-app.use("/api/register",studentregisterrouter)
 app.use('/api',enrollementRoute)
+app.use('/api/authentication', Authentication)
 
-const userRoutes = require('../Routes/user.routes.js'); 
-app.use('/api/users', userRoutes);
 
 
 app.listen(PORT, function () {

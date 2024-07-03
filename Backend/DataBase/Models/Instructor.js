@@ -1,44 +1,50 @@
-const { DataTypes } = require('sequelize');
+const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../index');
 const Course=require('./Courses')
 
 // console.log(sequelize,"hello")
 
-const Instructor = sequelize.define('Instructor', {
-    id: {
+class Instructor extends Model {
+  static init(sequelize) {
+    return super.init({
+      id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         allowNull: false,
         autoIncrement: true,
-    },
-    username: {
+      },
+      username: {
         type: DataTypes.STRING,
         allowNull: false,
         unique: true,
-    },
-    email: {
+      },
+      email: {
         type: DataTypes.STRING,
         allowNull: false,
         unique: true,
-    },
-    image :{
-        type: DataTypes.STRING,
-    },
-    password: {
+      },
+      password: {
         type: DataTypes.STRING,
         allowNull: false,
-    },
-    gender: {
-        type: DataTypes.ENUM,
-        values: ['Men', 'Women'],
-    },
-    phoneNumber: {
+      },
+      gender: {
+        type: DataTypes.ENUM('Men', 'Women'),
+      },
+      phoneNumber: {
         type: DataTypes.STRING,
         allowNull: false,
-    },
-});
+      },
+    }, {
+      sequelize,
+      modelName: 'Instructor',
+      tableName: 'instructors',
+      timestamps: true,
+    });
+  }
 
-// Define Associations
-Instructor.hasMany(Course, { foreignKey: 'instructorId' });
+  static associate(models) {
+    this.hasMany(models.Course, { foreignKey: 'instructorId' });
+  }
+}
 
 module.exports = Instructor;
