@@ -2,7 +2,6 @@ const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../index.js'); 
 const Student = require('./Students.js');
 const Course = require('./Courses.js');
-
 class EnrollmentRequest extends Model {}
 
 EnrollmentRequest.init({
@@ -44,5 +43,4 @@ EnrollmentRequest.init({
 // Define Associations
 EnrollmentRequest.belongsTo(Student, { foreignKey: 'studentId' });
 EnrollmentRequest.belongsTo(Course, { foreignKey: 'courseId' });
-
 module.exports = EnrollmentRequest;
