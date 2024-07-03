@@ -2,18 +2,31 @@ const { Sequelize } = require('sequelize');
 const sequelize = new Sequelize('greenfield2', 'root', 'root', {
     host: 'localhost',
     dialect: 'mysql',
-
-    // define: {
-    //     timestamps: false,
-    //   },
-
+    logging: false, // Optional: Disable logging
 });
 
-// sequelize.sync({force: true}) 
-//   .then(() => {
-//     console.log('Database & tables created!');
-//   })
-//   .catch(error => console.error('Unable to create tables:', error));
+const Student = require('./Models/Students.js');
+const Instructor = require('./Models/Instructor.js');
+const Course = require('./Models/Courses.js');
+const EnrollmentRequest = require('./Models/EnrollmentRequest.js');
+
+// Initialize models
+Student.init(sequelize);
+Instructor.init(sequelize);
+Course.init(sequelize);
+EnrollmentRequest.init(sequelize);
+
+// Set up associations
+Student.associate({ EnrollmentRequest });
+Instructor.associate({ Course });
+Course.associate({ Instructor, EnrollmentRequest });
+EnrollmentRequest.associate({ Student, Course });
+
+sequelize.sync({ force: true }) 
+    .then(() => {
+        console.log('Database & tables created!');
+    })
+    .catch(error => console.error('Unable to create tables:', error));
 
 async function testConnection() {
     try {
