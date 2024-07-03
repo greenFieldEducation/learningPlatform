@@ -1,4 +1,4 @@
-require("dotenv").config();
+
 const express = require("express");
 const app = express();
 const PORT = 5000;
@@ -16,7 +16,8 @@ app.use("/api/student",studentrouter)
 app.use("/api",instructorRoutes)
 
 
-
+const userRoutes = require('../Routes/user.routes.js'); 
+app.use('/api/users', userRoutes);
 
 
 app.listen(PORT, function () {
