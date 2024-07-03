@@ -7,14 +7,14 @@ const db=require("../DataBase/index.js")
 const studentrouter=require("../Routes/Students.js")
 const instructorRoutes = require('../Routes/Instructor');
 const cloudinary = require("../Cloudinary/Cloudinary.js")
-
+const enrollementRoute = require("../Routes/enrollementRoutes.js")
 
 app.use(cors())
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 app.use("/api/student",studentrouter)
 app.use("/api",instructorRoutes)
-
+app.use('/api',enrollementRoute)
 
 
 
