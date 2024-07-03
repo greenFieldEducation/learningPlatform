@@ -40,9 +40,9 @@ EnrollmentRequest.init({
   timestamps: true,
 });
 
+
+// Define Associations
 EnrollmentRequest.belongsTo(Student, { foreignKey: 'studentId' });
 EnrollmentRequest.belongsTo(Course, { foreignKey: 'courseId' });
-Student.hasMany(EnrollmentRequest, { foreignKey: 'studentId' });
-Course.hasMany(EnrollmentRequest, { foreignKey: 'courseId' });
 
 module.exports = EnrollmentRequest;
