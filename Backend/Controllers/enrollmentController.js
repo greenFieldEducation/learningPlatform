@@ -2,7 +2,7 @@ const Student = require('../DataBase/Models/Students');
 const Course = require('../DataBase/Models/Courses');
 const EnrollmentRequest = require('../DataBase/Models/EnrollmentRequest');
 
-async function enrollStudent(req, res, next) {
+async function enrollStudent(req, res) {
   const { studentId, courseId } = req.body;
 
   try {

@@ -1,45 +1,47 @@
-const { Sequelize, DataTypes } = require("sequelize");
-const sequelize = require("../index.js");
-const student = sequelize.define("student", {
-  id: {
-    type: DataTypes.INTEGER,
-    primaryKey: true,
-    allowNull: false,
-    autoIncrement: true,
-  },
-  Name: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  image: {
-    type: DataTypes.STRING,
-  },
-  Email: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  password: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  Favorite: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  Phone: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  Gender: {
-    type: DataTypes.ENUM("Men", "Women"),
-    allowNull: false,
-  },
-});
+const { Model, DataTypes } = require('sequelize');
+const sequelize = require('../index');
 
-// Define Associations
-student.hasMany(EnrollmentRequest, {
-  as: "enrollmentRequests",
-  foreignKey: "studentId",
-});
+class Student extends Model {
+  static init(sequelize) {
+    return super.init({
+      id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        allowNull: false,
+        autoIncrement: true,
+      },
+      name: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      email: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        unique: true,
+      },
+      favorite: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      phone: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      gender: {
+        type: DataTypes.ENUM('Men', 'Women'),
+        allowNull: false,
+      },
+    }, {
+      sequelize,
+      modelName: 'Student',
+      tableName: 'students',
+      timestamps: true,
+    });
+  }
 
-module.exports = student;
+  static associate(models) {
+    this.hasMany(models.EnrollmentRequest, { foreignKey: 'studentId' });
+  }
+}
+
+module.exports = Student;
