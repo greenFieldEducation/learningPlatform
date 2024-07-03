@@ -5,3 +5,4 @@ const enrollmentController = require('../Controllers/enrollmentController');
 router.post('/enroll', enrollmentController.enrollStudent);
 
 module.exports = router;
+
