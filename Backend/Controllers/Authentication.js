@@ -1,7 +1,8 @@
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
-const { Student, Instructor } = require("../DataBase/Models/user.model")
-const { Students, Instructor } = require("../DataBase/Models/Register.js")
+const Student = require('../DataBase/Models/Students.js')
+const Instructor = require('../DataBase/Models/Instructor.js')
+
 
 const SECRET_KEY = "Learniverse"
 
