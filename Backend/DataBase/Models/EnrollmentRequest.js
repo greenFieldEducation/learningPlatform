@@ -2,7 +2,6 @@ const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../index.js'); 
 const Student = require('./Students.js');
 const Course = require('./Courses.js');
-
 class EnrollmentRequest extends Model {}
 
 EnrollmentRequest.init({
