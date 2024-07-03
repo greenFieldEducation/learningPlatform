@@ -44,5 +44,4 @@ EnrollmentRequest.init({
 // Define Associations
 EnrollmentRequest.belongsTo(Student, { foreignKey: 'studentId' });
 EnrollmentRequest.belongsTo(Course, { foreignKey: 'courseId' });
-
 module.exports = EnrollmentRequest;
