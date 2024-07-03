@@ -1,34 +1,47 @@
-const { Sequelize, DataTypes } = require("sequelize");
-const{sequelize}=require('../index.js')
-const student = sequelize.define("student", {
-    id: {
+const { Model, DataTypes } = require('sequelize');
+const sequelize = require('../index');
+
+class Student extends Model {
+  static init(sequelize) {
+    return super.init({
+      id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         allowNull: false,
         autoIncrement: true,
       },
-    Name: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
-    Email: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
-    Password: {
+      name: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: false,
       },
-      Favorite: {
+      email: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: false,
+        unique: true,
       },
-      Phone: {
+      favorite: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: false,
       },
-      Gender:{
-        enum : ["Men","Women"]
-    }  
- });
- module.exports=student
+      phone: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      gender: {
+        type: DataTypes.ENUM('Men', 'Women'),
+        allowNull: false,
+      },
+    }, {
+      sequelize,
+      modelName: 'Student',
+      tableName: 'students',
+      timestamps: true,
+    });
+  }
+
+  static associate(models) {
+    this.hasMany(models.EnrollmentRequest, { foreignKey: 'studentId' });
+  }
+}
+
+module.exports = Student;
