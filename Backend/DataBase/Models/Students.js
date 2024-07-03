@@ -1,5 +1,5 @@
 const { Sequelize, DataTypes } = require("sequelize");
-const{sequelize}=require('../index.js')
+const sequelize=require('../index.js')
 const student = sequelize.define("student", {
     id: {
         type: DataTypes.INTEGER,
@@ -15,10 +15,6 @@ const student = sequelize.define("student", {
       type: DataTypes.STRING,
       allowNull: false
     },
-    Password: {
-        type: DataTypes.STRING,
-        allowNull: false
-      },
       Favorite: {
         type: DataTypes.STRING,
         allowNull: false
@@ -28,7 +24,9 @@ const student = sequelize.define("student", {
         allowNull: false
       },
       Gender:{
-        enum : ["Men","Women"]
-    }  
+        type: DataTypes.ENUM('Men', 'Women'),
+        allowNull: false,
+    }
  });
  module.exports=student
+ 
