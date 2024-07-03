@@ -1,5 +1,7 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../index');
+const Course=require('./Courses')
+
 // console.log(sequelize,"hello")
 
 const Instructor = sequelize.define('Instructor', {

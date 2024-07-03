@@ -1,44 +1,44 @@
 const { DataTypes } = require('sequelize');
-const sequelize = require('../index.js'); 
-const Instructor = require('./Instructor.js'); 
+const sequelize = require('../index');
+const Instructor = require('./Instructor'); 
+const EnrollmentRequest = require('./EnrollmentRequest'); 
 
 const Course = sequelize.define('Course', {
-  title: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  description: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  category: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  content: {
-    type: DataTypes.TEXT,
-    allowNull: false,
-  },
-  note: {
-    type: DataTypes.STRING,
-    allowNull: true,
-  },
-  instructorId: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-    references: {
-      model: Instructor,
-      key: 'id',
+    id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        allowNull: false,
+        autoIncrement: true,
     },
-  },
+    title: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
+    description: {
+        type: DataTypes.TEXT,
+    },
+    category: {
+        type: DataTypes.STRING,
+    },
+    content: {
+        type: DataTypes.TEXT,
+    },
+    note: {
+        type: DataTypes.STRING,
+    },
+    instructorId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+            model: 'Instructors',
+            key: 'id',
+        },
+    },
 }, {
-  sequelize,
-  modelName: 'Course',
-  tableName: 'courses',
+    tableName: 'courses',
 });
 
-// Establishing associations
-Instructor.hasMany(Course, { foreignKey: 'instructorId' });
+// Define Associations
 Course.belongsTo(Instructor, { foreignKey: 'instructorId' });
 Course.hasMany(EnrollmentRequest, { foreignKey: 'courseId' });
 

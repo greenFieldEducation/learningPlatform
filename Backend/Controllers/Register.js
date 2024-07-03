@@ -1,6 +1,6 @@
 const studentlogin = require('../DataBase/Models/Register.js')
 const jwt = require('jsonwebtoken')
-const bcrypt = require('bcrypt')
+
 
 
 const register = async (req, res) => {
