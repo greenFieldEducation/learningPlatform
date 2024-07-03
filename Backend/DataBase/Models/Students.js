@@ -1,20 +1,22 @@
 const { Sequelize, DataTypes } = require("sequelize");
 const sequelize = require("../index.js");
-const student = sequelize.define("student", {
+const EnrollmentRequest = require ('./EnrollmentRequest.js')
+const Student = sequelize.define("Student", {
+  
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
     allowNull: false,
     autoIncrement: true,
   },
-  Name: {
+  username: {
     type: DataTypes.STRING,
     allowNull: false,
   },
   image: {
     type: DataTypes.STRING,
   },
-  Email: {
+  email: {
     type: DataTypes.STRING,
     allowNull: false,
   },
@@ -22,24 +24,24 @@ const student = sequelize.define("student", {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  Favorite: {
+  favorite: {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  Phone: {
+  phone: {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  Gender: {
+  gender: {
     type: DataTypes.ENUM("Men", "Women"),
     allowNull: false,
   },
 });
 
 // Define Associations
-student.hasMany(EnrollmentRequest, {
-  as: "enrollmentRequests",
-  foreignKey: "studentId",
-});
+// student.hasMany(EnrollmentRequest, {
+//   as: "enrollmentRequests",
+//   foreignKey: "studentId",
+// });
 
-module.exports = student;
+module.exports = Student;

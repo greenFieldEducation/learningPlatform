@@ -1,6 +1,6 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../index');
-// console.log(sequelize,"hello")
+const Course = require ('./Courses.js')
 
 const Instructor = sequelize.define('Instructor', {
     id: {
@@ -37,6 +37,6 @@ const Instructor = sequelize.define('Instructor', {
 });
 
 // Define Associations
-Instructor.hasMany(Course, { foreignKey: 'instructorId' });
+// Instructor.hasMany(Course, { foreignKey: 'instructorId' });
 
 module.exports = Instructor;

@@ -38,8 +38,8 @@ const Course = sequelize.define('Course', {
 });
 
 // Establishing associations
-Instructor.hasMany(Course, { foreignKey: 'instructorId' });
-Course.belongsTo(Instructor, { foreignKey: 'instructorId' });
-Course.hasMany(EnrollmentRequest, { foreignKey: 'courseId' });
+// Instructor.hasMany(Course, { foreignKey: 'instructorId' });
+// Course.belongsTo(Instructor, { foreignKey: 'instructorId' });
+// Course.hasMany(EnrollmentRequest, { foreignKey: 'courseId' });
 
 module.exports = Course;
