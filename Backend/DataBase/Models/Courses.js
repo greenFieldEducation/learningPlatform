@@ -1,6 +1,6 @@
 const { DataTypes } = require('sequelize');
-const sequelize = require('../index.js'); // Adjust the path as needed
-const Instructor = require('./Instructor'); // Adjust the path as needed
+const sequelize = require('../index.js'); 
+const Instructor = require('./Instructor.js'); 
 
 const Course = sequelize.define('Course', {
   title: {
