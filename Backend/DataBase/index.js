@@ -1,11 +1,12 @@
 const { Sequelize } = require('sequelize');
-
 const sequelize = new Sequelize('greenfield2', 'root', 'root', {
     host: 'localhost',
     dialect: 'mysql',
+
     // define: {
     //     timestamps: false,
     //   },
+
 });
 
 // sequelize.sync({force: true}) 
