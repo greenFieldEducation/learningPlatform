@@ -9,8 +9,9 @@ exports.getAllStudents = async (req, res) => {
     }
 };
 exports.createStudent = async (req, res) => {
+    const { Name, Email, Favorite, Phone, Gender } = req.body;
     try {
-        const student = await student.create(req.body);
+        const student = await student.create({ Name, Email, Favorite, Phone, Gender });
         res.status(201).json(student);
     } catch (error) {
         res.status(400).json({ error: error.message });

@@ -26,9 +26,6 @@ const student = sequelize.define("student", {
       Gender:{
         type: DataTypes.ENUM('Men', 'Women'),
         allowNull: false,
-    },PhoneNumber: {
-      type: DataTypes.STRING,
-      allowNull: false
     }
  });
  module.exports=student

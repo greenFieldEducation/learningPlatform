@@ -3,14 +3,7 @@ const Courses = require('../models/Courses');
 
 async function createCourse(req, res) {
     try {
-        const {title, description, category, content, note} = req.body;
-        const newCourse = await Courses.create({
-            title,
-            description,
-            category,
-            content,
-            note
-        })
+        const newCourse = await Courses.create(req.body)
         res.status(201).json(newCourse)
     } catch (error) {
         res.status(400).json({ message: error.message })

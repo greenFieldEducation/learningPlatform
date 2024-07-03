@@ -10,12 +10,8 @@ const instructorRoutes = require('../Routes/Instructor');
 app.use(cors())
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
-app.use("/api",studentrouter)
-
-
-
-
-
+/*student*/
+app.use("/api/student",studentrouter)
 app.use("/api",instructorRoutes)
 
 
