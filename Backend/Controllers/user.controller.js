@@ -42,13 +42,13 @@ exports.login = async (req, res) => {
     // Check if the user exists
     const user = await User.findOne({ where: { email } });
     if (!user) {
-      return res.status(400).json({ msg: 'Invalid credentials' });
+      return res.status(400).json({ msg: 'Incorrect Email' });
     }
 
     // Check password
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-      return res.status(400).json({ msg: 'Invalid credentials' });
+      return res.status(400).json({ msg: 'Incorrect password' });
     }
 
     // Generate JWT

@@ -19,7 +19,8 @@ app.use("/api",instructorRoutes)
 app.use("/api/register",studentregisterrouter)
 app.use('/api',enrollementRoute)
 
-
+const userRoutes = require('../Routes/user.routes.js'); 
+app.use('/api/users', userRoutes);
 
 
 app.listen(PORT, function () {
