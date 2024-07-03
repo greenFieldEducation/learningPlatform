@@ -1,45 +1,47 @@
-const { DataTypes } = require('sequelize');
-const sequelize = require('../index.js'); 
-const Instructor = require('./Instructor.js'); 
+const { Model, DataTypes } = require('sequelize');
+const sequelize = require('../index');
 
-const Course = sequelize.define('Course', {
-  title: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  description: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  category: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  content: {
-    type: DataTypes.TEXT,
-    allowNull: false,
-  },
-  note: {
-    type: DataTypes.STRING,
-    allowNull: true,
-  },
-  instructorId: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-    references: {
-      model: Instructor,
-      key: 'id',
-    },
-  },
-}, {
-  sequelize,
-  modelName: 'Course',
-  tableName: 'courses',
-});
+class Course extends Model {
+  static init(sequelize) {
+    return super.init({
+      id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        allowNull: false,
+        autoIncrement: true,
+      },
+      title: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      description: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      category: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      content: {
+        type: DataTypes.TEXT,
+        allowNull: false,
+      },
+      note: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
+    }, {
+      sequelize,
+      modelName: 'Course',
+      tableName: 'courses',
+      timestamps: true,
+    });
+  }
 
-// Establishing associations
-Instructor.hasMany(Course, { foreignKey: 'instructorId' });
-Course.belongsTo(Instructor, { foreignKey: 'instructorId' });
-Course.hasMany(EnrollmentRequest, { foreignKey: 'courseId' });
+  static associate(models) {
+    this.belongsTo(models.Instructor, { foreignKey: 'instructorId' });
+    this.hasMany(models.EnrollmentRequest, { foreignKey: 'courseId' });
+  }
+}
 
 module.exports = Course;
