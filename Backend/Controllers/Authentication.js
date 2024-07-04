@@ -1,5 +1,7 @@
+// controllers/Authentication.js
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const cloudinary = require('../Cloudinary/Cloudinary.js');
 const Student = require('../DataBase/Models/Students.js');
 const Instructor = require('../DataBase/Models/Instructor.js');
 const verifyToken = require('./MiddlewareJWT.js');
@@ -7,7 +9,8 @@ const verifyToken = require('./MiddlewareJWT.js');
 const SECRET_KEY = "Learniverse";
 
 exports.register = async (req, res) => {
-    const { username, email, password, role, image, phone, gender } = req.body;
+    const { username, email, password, role, phone, gender } = req.body;
+    const imageFile = req.file; 
 
     try {
         let existingUser;
@@ -29,6 +32,15 @@ exports.register = async (req, res) => {
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
 
+        // Uploading  the image to Cloudinary
+        let imageUrl = '';
+        if (imageFile) {
+            const uploadResult = await cloudinary.uploader.upload(imageFile.path, {
+                folder: 'learniverse_users'
+            });
+            imageUrl = uploadResult.secure_url;
+        }
+
         let newUser;
         if (role === "student") {
             newUser = await Student.create({
@@ -36,7 +48,7 @@ exports.register = async (req, res) => {
                 email,
                 password: hashedPassword,
                 role,
-                image,
+                image: imageUrl,
                 phone,
                 gender,
             });
@@ -46,7 +58,7 @@ exports.register = async (req, res) => {
                 email,
                 password: hashedPassword,
                 role,
-                image,
+                image: imageUrl,
                 phone,
                 gender,
             });
