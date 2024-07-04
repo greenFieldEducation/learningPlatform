@@ -31,13 +31,19 @@ class Student extends Model {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      // favorite: {
-      //   type: DataTypes.STRING,
-      //   allowNull: false,
-      // },
+
+     fields:{
+      type: DataTypes.ENUM('Math','Economy','Management','Science','History&Geography','Art&Literature'),
+      allowNull: true
+      },
+
       role: {
         type: DataTypes.STRING,
         defaultValue: "student"
+      },
+      image: {
+        type: DataTypes.STRING,
+        allowNull: true,
       }
     }, {
       sequelize,
