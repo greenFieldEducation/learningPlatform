@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import Navbar from './LandingPage/Navbar';
 import axios from 'axios';
-import { Link, useNavigate } from "react-router-dom";
-const navigate = useNavigate();
+import { Link  }from "react-router-dom";
+
 
 const SignUp = () => {
   const [username, setUsername] = useState("");
@@ -13,6 +13,7 @@ const SignUp = () => {
   const [fields, setFields] = useState("");
   const [role, setRole] = useState("student");
   const [errorMessages, setErrorMessages] = useState({});
+ 
 
   const handleRegisterClick = async (e) => {
     e.preventDefault();
@@ -26,7 +27,7 @@ const SignUp = () => {
         phone,
         fields,
         role
-      },navigate);
+      });
 
       setErrorMessages({});
       console.log('Registration successful!', response.data);
@@ -51,13 +52,11 @@ const SignUp = () => {
       <Navbar />
       <div className="min-h-screen bg-gray-100 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-md">
-          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-            Create your account
-          </h2>
         </div>
 
         <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
           <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
+          <h2 className="text-2xl font-semibold mb-6 text-center">Sign Up</h2>
             <form className="space-y-6" onSubmit={handleRegisterClick}>
               <div>
                 <label htmlFor="username" className="block text-sm font-medium text-gray-700">

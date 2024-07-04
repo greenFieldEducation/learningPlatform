@@ -4,12 +4,8 @@ const jwt = require('jsonwebtoken');
 const Student = require('../DataBase/Models/Students.js');
 const Instructor = require('../DataBase/Models/Instructor.js');
 const verifyToken = require('./MiddlewareJWT.js');
-const {body, validationResult } = require('express-validator')
-const jwt = require('jsonwebtoken')
+const {body, validationResult, check } = require('express-validator')
 const cloudinary = require('../Cloudinary/Cloudinary.js')
-const { check, validationResult } = require('express-validator')
-
-
 
 
 const SECRET_KEY = "Learniverse"
