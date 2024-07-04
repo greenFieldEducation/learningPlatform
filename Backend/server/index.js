@@ -15,10 +15,11 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+app.use('/api/authentication', authenticationRoutes);
+
 app.use("/api/student", studentrouter);
 app.use("/api", instructorRoutes);
 app.use('/api', enrollementRoute);
-app.use('/api/authentication', authenticationRoutes);
 
 app.listen(PORT, function () {
     console.log("listening on port 5000!");
