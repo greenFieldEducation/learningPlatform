@@ -13,7 +13,6 @@ const Sidebar = () => {
     { name: 'Categories', path: '/student-dashboard/categories', icon: <FontAwesomeIcon icon={faBook} /> },
   ];
 
-  // Separate Settings item outside navItems
   const settingsItem = {
     name: 'Settings',
     path: '/student-dashboard/settings',

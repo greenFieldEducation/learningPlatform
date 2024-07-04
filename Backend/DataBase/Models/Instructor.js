@@ -34,6 +34,10 @@ class Instructor extends Model {
       role: {
         type: DataTypes.STRING,
         defaultValue: "instructor"
+      },
+      image: {
+        type: DataTypes.STRING,
+        allowNull: true,
       }
     }, {
       sequelize,
