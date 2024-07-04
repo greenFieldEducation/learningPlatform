@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import Navbar from '../Components/LandingPage/Navbar.jsx'
 import axios from 'axios'
@@ -12,17 +12,17 @@ const Login = () => {
   
     const handleSubmit = async (e) => {
       e.preventDefault()
+  
       try {
-        const response = await axios.post('/api/login', {
+        const response = await axios.post('http://127.0.0.1:5000/api/authentication/login', {
           email,
           password
         })
         const { token } = response.data
         localStorage.setItem('token', token)
-  
       } catch (err) {
           setError('Login failed. Please try again.')
-        }
+      }
     }
   return (
     <div className="bg-gray-100 text-gray-800 min-h-screen flex flex-col">
