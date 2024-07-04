@@ -1,8 +1,5 @@
 const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../index');
-const Course=require('./Courses')
-
-// console.log(sequelize,"hello")
 
 class Instructor extends Model {
   static init(sequelize) {

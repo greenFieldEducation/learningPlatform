@@ -1,4 +1,5 @@
 const Instructor = require('../DataBase/Models/Instructor');
+
 const createInstructor = async (req, res) => {
     try {
         const instructor = await Instructor.create(req.body);

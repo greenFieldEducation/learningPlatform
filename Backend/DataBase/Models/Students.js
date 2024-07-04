@@ -10,7 +10,7 @@ class Student extends Model {
         allowNull: false,
         autoIncrement: true,
       },
-      name: {
+      username: {
         type: DataTypes.STRING,
         allowNull: false,
       },
@@ -23,7 +23,7 @@ class Student extends Model {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      phone: {
+      phoneNumber: {
         type: DataTypes.STRING,
         allowNull: false,
       },
@@ -31,7 +31,8 @@ class Student extends Model {
         type: DataTypes.ENUM('Men', 'Women'),
         allowNull: false,
       },
-    }, {
+      role:{defaultValue:"student"}
+    },{
       sequelize,
       modelName: 'Student',
       tableName: 'students',
