@@ -1,29 +1,31 @@
-import React, { useState } from 'react'
-import { NavLink } from 'react-router-dom'
-import Navbar from '../Components/LandingPage/Navbar.jsx'
-import axios from 'axios'
-
-
+// src/components/Login.jsx
+import React, { useState } from 'react';
+import { NavLink, useNavigate } from 'react-router-dom';
+import Navbar from './LandingPage/Navbar.jsx';
+import axios from 'axios';
 
 const Login = () => {
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
-    const [error, setError] = useState('')
-  
-    const handleSubmit = async (e) => {
-      e.preventDefault()
-  
-      try {
-        const response = await axios.post('http://127.0.0.1:5000/api/authentication/login', {
-          email,
-          password
-        })
-        const { token } = response.data
-        localStorage.setItem('token', token)
-      } catch (err) {
-          setError('Login failed. Please try again.')
-      }
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await axios.post('http://127.0.0.1:5000/api/authentication/login', {
+        email,
+        password,
+      });
+      const { token } = response.data;
+      localStorage.setItem('token', token);
+      navigate('/InstructorProfile');
+    } catch (err) {
+      setError('Login failed. Please try again.');
     }
+  };
+
   return (
     <div className="bg-gray-100 text-gray-800 min-h-screen flex flex-col">
       <Navbar />
@@ -42,7 +44,7 @@ const Login = () => {
                 id="email"
                 placeholder="Enter your email"
                 value={email}
-                onChange={e=>{setEmail(e.target.value)}}
+                onChange={(e) => setEmail(e.target.value)}
                 required
               />
             </div>
@@ -56,7 +58,7 @@ const Login = () => {
                 id="password"
                 placeholder="Enter your password"
                 value={password}
-                onChange={e=>{setPassword(e.target.value)}}
+                onChange={(e) => setPassword(e.target.value)}
                 required
               />
             </div>
@@ -64,7 +66,9 @@ const Login = () => {
               <button
                 className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 type="submit"
-              >Login</button>
+              >
+                Login
+              </button>
             </div>
             <div className="text-center">
               <NavLink to="/" className="text-blue-500 hover:underline">
@@ -75,7 +79,7 @@ const Login = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Login
+export default Login;
