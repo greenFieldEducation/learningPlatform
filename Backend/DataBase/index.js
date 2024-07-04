@@ -1,3 +1,4 @@
+
 const { Sequelize } = require("sequelize")
 const sequelize = new Sequelize("greenfield2", "root", "root", {
   host: "localhost",
@@ -26,6 +27,7 @@ EnrollmentRequest.associate({ Student, Course })
 //     console.log("Database & tables created!")
 //   })
 //   .catch((error) => console.error("Unable to create tables:", error))
+
 
 async function testConnection() {
   try {

@@ -1,3 +1,10 @@
+
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+const Student = require('../DataBase/Models/Students.js');
+const Instructor = require('../DataBase/Models/Instructor.js');
+const verifyToken = require('./MiddlewareJWT.js');
+const {body, validationResult } = require('express-validator'
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const cloudinary = require('../Cloudinary/Cloudinary.js')
@@ -6,10 +13,21 @@ const Student = require('../DataBase/Models/Students.js')
 const Instructor = require('../DataBase/Models/Instructor.js')
 const verifyToken = require('./MiddlewareJWT.js')
 
+
 const SECRET_KEY = "Learniverse"
 
+const validateRegister = [
+    body('username').notEmpty().withMessage('Username is required'),
+    body('email').isEmail().withMessage('Valid email is required'),
+    body('password').isLength({ min: 6 }).withMessage('Password must be at least 6 characters long'),   
+];
+
 exports.register = async (req, res) => {
-    const { username, email, password, role, phone, gender } = req.body
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
+    const { username, email, password, role, phone, gender } = req.body;
     try {
         let existingUser
         if (role === "student") {
@@ -19,7 +37,10 @@ exports.register = async (req, res) => {
         }
 
         if (existingUser) {
-            return res.status(400).json({ message: "Email already in use" })
+
+            return res.status(400).json({ message: "Username or email already in use" });
+            
+
         }
 
         const validRoles = ["student", "instructor"]
@@ -45,7 +66,6 @@ exports.register = async (req, res) => {
                 email,
                 password: hashedPassword,
                 role,
-                image: imageUrl,
                 phone,
                 gender,
             })
@@ -55,7 +75,6 @@ exports.register = async (req, res) => {
                 email,
                 password: hashedPassword,
                 role,
-                image: imageUrl,
                 phone,
                 gender,
             })
@@ -115,5 +134,7 @@ exports.login = [
         }
     }
 ]
+exports.verifyToken = verifyToken;
+exports.validateRegister = validateRegister
 
-exports.verifyToken = verifyToken
+
