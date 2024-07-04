@@ -1,4 +1,3 @@
-// controllers/Authentication.js
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const cloudinary = require('../Cloudinary/Cloudinary.js');
@@ -10,8 +9,6 @@ const SECRET_KEY = "Learniverse";
 
 exports.register = async (req, res) => {
     const { username, email, password, role, phone, gender } = req.body;
-    const imageFile = req.file; 
-
     try {
         let existingUser;
         if (role === "student") {
@@ -34,12 +31,13 @@ exports.register = async (req, res) => {
 
         // Uploading  the image to Cloudinary
         let imageUrl = '';
-        if (imageFile) {
-            const uploadResult = await cloudinary.uploader.upload(imageFile.path, {
+
+            const uploadResult = await cloudinary.uploader.upload(req.body.image, {
                 folder: 'learniverse_users'
             });
+            console.log(uploadResult);
             imageUrl = uploadResult.secure_url;
-        }
+        
 
         let newUser;
         if (role === "student") {
