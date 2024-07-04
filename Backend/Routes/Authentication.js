@@ -1,10 +1,9 @@
 
 const express = require('express')
 const router = express.Router()
-const {login,register,} = require('../Controllers/Authentication.js')
 const verifyToken = require ('../Controllers/MiddlewareJWT.js')
 const multer = require('multer');
-const { register, login, verifyToken,validateRegister } = require('../Controllers/Authentication.js');
+const { register, login,validateRegister } = require('../Controllers/Authentication.js');
 
 const upload = multer({ dest: 'uploads/' });
 
