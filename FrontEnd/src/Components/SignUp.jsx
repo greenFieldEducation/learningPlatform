@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import Navbar from './LandingPage/Navbar';
 import axios from 'axios';
+import { Link, useNavigate } from "react-router-dom";
+const navigate = useNavigate();
 
 const SignUp = () => {
   const [username, setUsername] = useState("");
@@ -24,7 +26,7 @@ const SignUp = () => {
         phone,
         fields,
         role
-      });
+      },navigate);
 
       setErrorMessages({});
       console.log('Registration successful!', response.data);
@@ -218,7 +220,7 @@ const SignUp = () => {
             <p className="mt-6 text-center text-sm text-gray-600">
               Already have an account?{' '}
               <a href="#" className="font-medium text-indigo-600 hover:text-indigo-500">
-                Sign in
+              <Link to="/login">Sign in</Link>
               </a>
             </p>
           </div>
