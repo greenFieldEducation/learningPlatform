@@ -3,7 +3,6 @@ import Welcome from './WelcomeSection.jsx';
 import StudentProfileCard from './StudentProfileCard.jsx';
 import CourseEnrollment from './CourseEnrollment.jsx';
 import Sidebar from './SideBar.jsx';
-import CalendarComponent from './CalendarComponent.jsx';
 
 const StudentDashboard = () => {
   return (
