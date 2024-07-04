@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHome, faStar, faBook, faCog } from '@fortawesome/free-solid-svg-icons'; // Import icons
+import { faHome, faStar, faBook, faCog, faCalendar } from '@fortawesome/free-solid-svg-icons'; // Import icons
 
 const Sidebar = () => {
   const location = useLocation();
@@ -11,6 +11,7 @@ const Sidebar = () => {
     { name: 'Home', path: '/student-dashboard', icon: <FontAwesomeIcon icon={faHome} /> },
     { name: 'Favorites', path: '/student-dashboard/favorites', icon: <FontAwesomeIcon icon={faStar} /> },
     { name: 'Categories', path: '/student-dashboard/categories', icon: <FontAwesomeIcon icon={faBook} /> },
+    { name: 'Calendar', path: '/student-dashboard/calendar', icon: <FontAwesomeIcon icon={faCalendar} /> }, // New Calendar icon
   ];
 
   const settingsItem = {
