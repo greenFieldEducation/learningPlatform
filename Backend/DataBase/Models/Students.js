@@ -19,11 +19,7 @@ class Student extends Model {
         allowNull: false,
         unique: true,
       },
-      favorite: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-      phoneNumber: {
+      password: {
         type: DataTypes.STRING,
         allowNull: false,
       },
@@ -31,8 +27,19 @@ class Student extends Model {
         type: DataTypes.ENUM('Men', 'Women'),
         allowNull: false,
       },
-      role:{defaultValue:"student"}
-    },{
+      phone: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      favorite: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      role: {
+        type: DataTypes.STRING,
+        defaultValue: "student"
+      }
+    }, {
       sequelize,
       modelName: 'Student',
       tableName: 'students',
