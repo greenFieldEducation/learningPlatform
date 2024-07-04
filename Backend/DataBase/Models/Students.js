@@ -10,7 +10,7 @@ class Student extends Model {
         allowNull: false,
         autoIncrement: true,
       },
-      name: {
+      username: {
         type: DataTypes.STRING,
         allowNull: false,
       },
@@ -19,11 +19,7 @@ class Student extends Model {
         allowNull: false,
         unique: true,
       },
-      favorite: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-      phone: {
+      password: {
         type: DataTypes.STRING,
         allowNull: false,
       },
@@ -31,6 +27,24 @@ class Student extends Model {
         type: DataTypes.ENUM('Men', 'Women'),
         allowNull: false,
       },
+      phone: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+
+     fields:{
+      type: DataTypes.ENUM('Math','Economy','Management','Science','History&Geography','Art&Literature'),
+      allowNull: true
+      },
+
+      role: {
+        type: DataTypes.STRING,
+        defaultValue: "student"
+      },
+      image: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      }
     }, {
       sequelize,
       modelName: 'Student',

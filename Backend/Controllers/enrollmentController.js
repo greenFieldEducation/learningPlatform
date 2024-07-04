@@ -1,15 +1,18 @@
-const Student = require('../DataBase/Models/Students');
-const Course = require('../DataBase/Models/Courses');
-const EnrollmentRequest = require('../DataBase/Models/EnrollmentRequest');
+const Student = require('../DataBase/Models/Students.js');
+const Course = require('../DataBase/Models/Courses.js');
+const EnrollmentRequest = require('../DataBase/Models/EnrollmentRequest.js');
+const Instructor = require('../DataBase/Models/Instructor.js');
+const webpush = require('../config/webPush');
+const { Op } = require('sequelize');
 
 async function enrollStudent(req, res) {
   const { studentId, courseId } = req.body;
 
   try {
-    //  Student and Course instances
-    const student = await Student.findByPk(studentId);  //* by primary key 
-    const course = await Course.findByPk(courseId); 
-      
+    // Fetch Student and Course instances
+    const student = await Student.findByPk(studentId);
+    const course = await Course.findByPk(courseId);
+
     if (!student || !course) {
       return res.status(404).json({ error: 'Student or Course not found' });
     }
@@ -18,9 +21,28 @@ async function enrollStudent(req, res) {
     const enrollmentRequest = await EnrollmentRequest.create({
       studentId: student.id,
       courseId: course.id,
-      status: 'pending', //*Setting the initial status of an enrollment request to 'pending':
-                            //*It provides a default state for newly created records until further actions are taken.
+      status: 'pending',
     });
+
+    // Notify the instructor
+    const instructor = await Instructor.findOne({
+      where: { id: course.instructorId },
+    });
+
+    if (instructor && instructor.pushSubscription) {
+      const payload = JSON.stringify({
+        title: 'New Enrollment Request',
+        body: `Student ${studentId} has requested to enroll in ${course.title}`,
+      });
+
+      webpush.sendNotification(instructor.pushSubscription, payload)
+        .then(() => {
+          console.log('Notification sent successfully');
+        })
+        .catch(err => {
+          console.error('Error sending notification:', err);
+        });
+    }
 
     console.log(`Enrollment request created for Student ${student.id} in Course ${course.id}`);
 
