@@ -27,10 +27,14 @@ class Instructor extends Model {
       gender: {
         type: DataTypes.ENUM('Men', 'Women'),
       },
-      phoneNumber: {
+      phone: {
         type: DataTypes.STRING,
         allowNull: false,
       },
+      role: {
+        type: DataTypes.STRING,
+        defaultValue: "instructor"
+      }
     }, {
       sequelize,
       modelName: 'Instructor',
