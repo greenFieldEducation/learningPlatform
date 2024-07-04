@@ -9,6 +9,7 @@ import Login from './Components/Login.jsx'
 import StudentDashboard from './Components/studentDashboard/StudentDashboard.jsx';
 
 const App = () => (
+  
   <Router>
     <Routes>
       <Route path="/" element={<LandingPage />} />
