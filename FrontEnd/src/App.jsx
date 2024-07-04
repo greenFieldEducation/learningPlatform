@@ -6,6 +6,7 @@ import Login from './Components/Login.jsx'
 
 
 
+import StudentDashboard from './Components/studentDashboard/StudentDashboard.jsx';
 
 const App = () => (
   <Router>
@@ -14,7 +15,7 @@ const App = () => (
       <Route path="/signup" element={<SignUp />} />
 
       <Route path ="/login" element ={<Login />}/>
-        
+      <Route path="/student-dashboard" element={<StudentDashboard />} />
     </Routes>
   </Router>
 );
