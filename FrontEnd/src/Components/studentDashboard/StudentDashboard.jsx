@@ -1,12 +1,21 @@
-import React, { useState, useEffect } from "react";
-import Sidebar from "./SideBar.jsx";
+import React from "react";
+import Sidebar from "./SideBar";
 import WelcomeSection from "./WelcomeSection.jsx";
+import CourseEnrollment from "./CourseEnrollment.jsx";
+
 const StudentDashboard = () => {
   return (
-    <div className="min-h-screen bg-gray-100 p-4">
-      <Sidebar />
-      <div className="container mx-auto p-4">
+    <div className="min-h-screen bg-gray-100 flex">
+      
+      
+        <Sidebar />
+      
+
+      
+      <div className="flex-1 p-4 flex flex-col items-start">
         <WelcomeSection />
+        <CourseEnrollment/>
+        
       </div>
     </div>
   );
