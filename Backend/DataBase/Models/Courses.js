@@ -19,7 +19,14 @@ class Course extends Model {
         allowNull: false,
       },
       category: {
-        type: DataTypes.STRING,
+        type: DataTypes.ENUM(
+          'Math',
+          'Economy',
+          'Management',
+          'Science',
+          'History&Geography',
+          'Art&Literature'
+        ),
         allowNull: false,
       },
       content: {
