@@ -9,4 +9,4 @@ const getAllFeedbacks = async (req, res) => {
   }
 }
 
-export default getAllFeedbacks
+module.exports= getAllFeedbacks

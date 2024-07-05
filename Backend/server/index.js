@@ -9,7 +9,6 @@ const instructorRoutes = require('../Routes/Instructor')
 const enrollementRoute = require("../Routes/enrollementRoutes.js")
 const authenticationRoutes = require('../Routes/Authentication.js')
 const feedbackRoutes = require('../Routes/Feedback.js')
-const upload = multer({ dest: 'uploads/' })
 
 app.use(cors())
 app.use(express.json())
