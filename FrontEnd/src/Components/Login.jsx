@@ -1,4 +1,3 @@
-// src/components/Login.jsx
 import React, { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import Navbar from './LandingPage/Navbar.jsx';
@@ -20,7 +19,7 @@ const Login = () => {
       });
       const { token } = response.data;
       localStorage.setItem('token', token);
-      navigate('/InstructorProfile');
+      navigate('/instructor-dashboard')
     } catch (err) {
       setError('Login failed. Please try again.');
     }
