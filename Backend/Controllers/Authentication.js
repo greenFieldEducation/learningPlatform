@@ -3,8 +3,9 @@ const jwt = require('jsonwebtoken');
 const Student = require('../DataBase/Models/Students.js');
 const Instructor = require('../DataBase/Models/Instructor.js');
 const verifyToken = require('./MiddlewareJWT.js');
-const {body, validationResult, check } = require('express-validator')
+const { body, check, validationResult } = require('express-validator')
 const cloudinary = require('../Cloudinary/Cloudinary.js')
+
 
 
 const SECRET_KEY = "Learniverse"
@@ -15,58 +16,60 @@ const SECRET_KEY = "Learniverse"
 //     body('password').isLength({ min: 6 }).withMessage('Password must be at least 6 characters long'),   
 // ];
 
-    const validateRegister = [
+const validateRegister = [
     body('username').isLength({ min: 7 }).withMessage('Username must be longer than 6 characters'),
     body('password').isLength({ min: 7 }).withMessage('Password must be longer than 6 characters'),
     body('gender').notEmpty().withMessage('Gender is required'),
     body('phone').isLength({ min: 8 }).withMessage('Phone number must be longer than 7 digits'),
-    body('username').custom(async value => {
-      const user = await User.findOne({ username: value });
-      if (user) {
-        throw new Error('Username already in use');
-      }
-      return true;
-    })
-  ]
+    body('role').custom((value, { req }) => {
+        if (value === 'student' && !req.body.fields) {
+            throw new Error('Field is required for students');
+        }
+        return true;
+    }),
+    body('username').custom(async (value) => {
+        const student = await Student.findOne({ where: { username: value } });
+        const instructor = await Instructor.findOne({ where: { username: value } });
+        if (student || instructor) {
+            throw new Error('Username already in use');
+        }
+        return true;
+    }),
+];
 
 exports.register = async (req, res) => {
+    console.log('Received register request:', req.body); // Log request body
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
+        console.log('Validation errors:', errors.array()); // Log validation errors
         return res.status(400).json({ errors: errors.array() });
     }
-    const { username, email, password, role, phone, gender,fields } = req.body;
+
+    const { username, email, password, role, phone, gender, fields } = req.body;
+
     try {
-        let existingUser
+        let existingUser;
         if (role === "student") {
-            existingUser = await Student.findOne({ where: { email } })
+            existingUser = await Student.findOne({ where: { email } });
         } else if (role === "instructor") {
-            existingUser = await Instructor.findOne({ where: { email } })
+            existingUser = await Instructor.findOne({ where: { email } });
         }
 
         if (existingUser) {
-
-            return res.status(400).json({ message: "Username or email already in use" });
-            
-
+            console.log('Email already in use'); // Log existing email case
+            return res.status(400).json({ errors: [{ msg: "Email already in use", param: "email" }] });
         }
 
-        const validRoles = ["student", "instructor"]
+        const validRoles = ["student", "instructor"];
         if (!validRoles.includes(role)) {
-            return res.status(400).json({ message: "Invalid role" })
+            console.log('Invalid role'); // Log invalid role case
+            return res.status(400).json({ errors: [{ msg: "Invalid role", param: "role" }] });
         }
 
-        const salt = await bcrypt.genSalt(10)
-        const hashedPassword = await bcrypt.hash(password, salt)
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(password, salt);
 
-        // Uploading the image to Cloudinary
-        // let imageUrl = ''
-        // const uploadResult = await cloudinary.uploader.upload(req.body.image, {
-        //     folder: 'learniverse_users'
-        // })
-        // console.log(uploadResult)
-        // imageUrl = uploadResult.secure_url
-
-        let newUser
+        let newUser;
         if (role === "student") {
             newUser = await Student.create({
                 username,
@@ -76,7 +79,7 @@ exports.register = async (req, res) => {
                 phone,
                 gender,
                 fields
-            })
+            });
         } else if (role === "instructor") {
             newUser = await Instructor.create({
                 username,
@@ -85,13 +88,14 @@ exports.register = async (req, res) => {
                 role,
                 phone,
                 gender,
-            })
+            });
         }
 
-        res.status(201).json({ message: "User registered successfully", user: newUser })
+        console.log('User registered successfully:', newUser); // Log successful registration
+        res.status(201).json({ message: "User registered successfully", user: newUser });
     } catch (error) {
-        console.error(error)
-        res.status(500).json({ message: "Server error" })
+        console.error('Server error:', error); // Log server error
+        res.status(500).json({ errors: [{ msg: "Server error", param: "general" }] });
     }
 }
 
