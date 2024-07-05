@@ -7,6 +7,7 @@ import StudentDashboard from './Components/studentDashboard/StudentDashboard.jsx
 import InstructorDashboard from './Components/instructorDashbord.jsx';
 
 const App = () => (
+  
   <Router>
     <Routes>
       <Route path="/" element={<LandingPage />} />
