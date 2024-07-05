@@ -11,9 +11,11 @@ exports.getAllStudents = async (req, res) => {
     }
 };
 exports.createStudent = async (req, res) => {
+
     const { username, email, password, gender, phone,fields,role } = req.body;
     try {
         const student = await Student.create({ username, email, password, gender, phone,fields,role });
+
         res.status(201).json(student);
     } catch (error) {
       console.log(error)

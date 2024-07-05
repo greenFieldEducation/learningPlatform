@@ -31,7 +31,6 @@ class Student extends Model {
         type: DataTypes.STRING,
         allowNull: false,
       },
-
      fields:{
       type: DataTypes.ENUM('Math','Economy','Management','Science','History&Geography','Art&Literature'),
       allowNull: true
@@ -40,11 +39,8 @@ class Student extends Model {
       role: {
         type: DataTypes.STRING,
         defaultValue: "student"
-      },
-      image: {
-        type: DataTypes.STRING,
-        allowNull: true,
       }
+     
     }, {
       sequelize,
       modelName: 'Student',
