@@ -1,6 +1,6 @@
 
 const { Sequelize } = require("sequelize")
-const sequelize = new Sequelize("greenfield2", "root", "root", {
+const sequelize = new Sequelize("greenfield2", "root", "Troll1996@@", {
   host: "localhost",
   dialect: "mysql",
   logging: false,
@@ -21,12 +21,12 @@ Instructor.associate({ Course })
 Course.associate({ Instructor, EnrollmentRequest })
 EnrollmentRequest.associate({ Student, Course })
 
-sequelize
-  .sync({ force: true })
-  .then(() => {
-    console.log("Database & tables created!")
-  })
-  .catch((error) => console.error("Unable to create tables:", error))
+// sequelize
+//   .sync({ force: true })
+//   .then(() => {
+//     console.log("Database & tables created!")
+//   })
+//   .catch((error) => console.error("Unable to create tables:", error))
 
 
 async function testConnection() {
