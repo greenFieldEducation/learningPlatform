@@ -28,7 +28,11 @@ module.exports = {
       gender: {
         type: Sequelize.ENUM('Men', 'Women'),
         allowNull: false,
-      }
+      },
+      fields:{
+        type: DataTypes.ENUM('Math','Economy','Management','Science','History&Geography','Art&Literature'),
+        allowNull: true
+        },
     });
   },
 
