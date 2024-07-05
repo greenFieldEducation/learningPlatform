@@ -13,6 +13,7 @@ const Sidebar = ({ scrollToSection }) => {
     { name: 'Favorites', section: 'favorites', icon: <FontAwesomeIcon icon={faStar} /> },
     { name: 'Categories', section: 'categories', icon: <FontAwesomeIcon icon={faBook} /> },
     { name: 'Calendar', section: 'calendar', icon: <FontAwesomeIcon icon={faCalendar} /> },
+
   ];
 
   const settingsItem = {
