@@ -45,6 +45,13 @@ exports.register = async (req, res) => {
         const salt = await bcrypt.genSalt(10)
         const hashedPassword = await bcrypt.hash(password, salt)
 
+        // // Uploading the image to Cloudinary
+        // let imageUrl = ''
+        // const uploadResult = await cloudinary.uploader.upload(req.body.image, {
+        //     folder: 'learniverse_users'
+        // })
+        // console.log(uploadResult)
+        // imageUrl = uploadResult.secure_url
         // Uploading the image to Cloudinary
         // let imageUrl = ''
         // const uploadResult = await cloudinary.uploader.upload(req.body.image, {
