@@ -4,9 +4,13 @@ import StudentProfileCard from './StudentProfileCard.jsx';
 import Sidebar from './SideBar.jsx';
 import CalendarView from './CalendarView .jsx';
 import MyCourses from './MyCourses.jsx';
+import AllCourses from './AllCourses.jsx';
+
+
 const StudentDashboard = () => {
   const welcomeRef = useRef(null);
   const calendarRef = useRef(null);
+const allCoursesRef=useRef(null)
 
   const scrollToSection = (section) => {
     switch (section) {
@@ -15,6 +19,9 @@ const StudentDashboard = () => {
         break;
       case 'calendar':
         calendarRef.current.scrollIntoView({ behavior: 'smooth' });
+        break;
+        case 'categories':
+        allCoursesRef.current.scrollIntoView({ behavior: 'smooth' });
         break;
       default:
         break;
@@ -41,11 +48,16 @@ const StudentDashboard = () => {
             < MyCourses/>
           
         </div>
+        <h2 ref={allCoursesRef} className="text-2xl font-bold mb-4">all courses</h2>
+          
+          < AllCourses/>
+        
+      </div>
         <div ref={calendarRef} className="mt-4">
           <CalendarView />
+
         </div>
       </div>
-    </div>
   );
 };
 

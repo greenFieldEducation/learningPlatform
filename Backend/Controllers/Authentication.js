@@ -68,7 +68,7 @@ exports.register = async (req, res) => {
                 role,
                 phone,
                 gender,
-                
+                    fields
             })
         }
 
