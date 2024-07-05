@@ -18,7 +18,12 @@ const SECRET_KEY = "Learniverse"
 
 const validateRegister = [
     body('username').isLength({ min: 7 }).withMessage('Username must be longer than 6 characters'),
-    body('password').isLength({ min: 7 }).withMessage('Password must be longer than 6 characters'),
+    body('password')
+        .isLength({ min: 7 }).withMessage('Password must be longer than 6 characters')
+        .matches(/[A-Z]/).withMessage('Password must contain at least one uppercase letter')
+        .matches(/[a-z]/).withMessage('Password must contain at least one lowercase letter')
+        .matches(/[0-9]/).withMessage('Password must contain at least one digit')
+        .matches(/[!@#$%^&*(),.?":{}|<>]/).withMessage('Password must contain at least one special character'),
     body('gender').notEmpty().withMessage('Gender is required'),
     body('phone').isLength({ min: 8 }).withMessage('Phone number must be longer than 7 digits'),
     body('role').custom((value, { req }) => {
@@ -35,6 +40,14 @@ const validateRegister = [
         }
         return true;
     }),
+    body('email').custom(async (value) => {
+        const student = await Student.findOne({ where: { email: value } });
+        const instructor = await Instructor.findOne({ where: { email: value } });
+        if (student || instructor) {
+            throw new Error('Email already in use');
+        }
+        return true;
+    }),
 ];
 
 exports.register = async (req, res) => {
@@ -48,16 +61,16 @@ exports.register = async (req, res) => {
     const { username, email, password, role, phone, gender, fields } = req.body;
 
     try {
-        let existingUser;
-        if (role === "student") {
-            existingUser = await Student.findOne({ where: { email } });
-        } else if (role === "instructor") {
-            existingUser = await Instructor.findOne({ where: { email } });
-        }
-
+        let existingUser = await Student.findOne({ where: { email } }) || await Instructor.findOne({ where: { email } });
         if (existingUser) {
             console.log('Email already in use'); // Log existing email case
             return res.status(400).json({ errors: [{ msg: "Email already in use", param: "email" }] });
+        }
+
+        existingUser = await Student.findOne({ where: { username } }) || await Instructor.findOne({ where: { username } });
+        if (existingUser) {
+            console.log('Username already in use'); // Log existing username case
+            return res.status(400).json({ errors: [{ msg: "Username already in use", param: "username" }] });
         }
 
         const validRoles = ["student", "instructor"];
@@ -97,7 +110,7 @@ exports.register = async (req, res) => {
         console.error('Server error:', error); // Log server error
         res.status(500).json({ errors: [{ msg: "Server error", param: "general" }] });
     }
-}
+};
 
 exports.login = [
     check('email', 'Please include a valid email').isEmail(),
