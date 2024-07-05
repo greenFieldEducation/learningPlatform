@@ -5,7 +5,6 @@ const Student = require('../DataBase/Models/Students.js');
 const Instructor = require('../DataBase/Models/Instructor.js');
 const verifyToken = require('./MiddlewareJWT.js');
 const {body, check,validationResult } = require('express-validator')
-const cloudinary = require('../Cloudinary/Cloudinary.js')
 
 
 
@@ -47,13 +46,7 @@ exports.register = async (req, res) => {
         const hashedPassword = await bcrypt.hash(password, salt)
 
 
-        // Uploading the image to Cloudinary
-        // let imageUrl = ''
-        // const uploadResult = await cloudinary.uploader.upload(req.body.image, {
-        //     folder: 'learniverse_users'
-        // })
-        // console.log(uploadResult)
-        // imageUrl = uploadResult.secure_url
+       
 
         let newUser
         if (role === "student") {

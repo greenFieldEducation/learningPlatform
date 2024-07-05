@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Navbar from './LandingPage/Navbar';
+import Navbar from '../LandingPage/Navbar.jsx';
 import axios from 'axios';
 
 const SignUp = () => {
