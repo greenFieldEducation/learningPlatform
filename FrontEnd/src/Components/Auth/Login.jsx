@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
-import Navbar from './LandingPage/Navbar.jsx';
+import Navbar from '../LandingPage/Navbar.jsx';
 import axios from 'axios';
 
 const Login = () => {
