@@ -8,7 +8,7 @@ const { register, login,validateRegister } = require('../Controllers/Authenticat
 // const upload = multer({ dest: 'uploads/' });
 
 router.post('/login', login);
-router.post('/register', register,validateRegister);
+router.post('/register', validateRegister,register);
 
 router.get('/protected', verifyToken, (req, res) => {
     res.json({ message: "This is a protected route" });

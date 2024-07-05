@@ -13,9 +13,26 @@ const SignUp = () => {
   const [role, setRole] = useState("student");
   const [errorMessages, setErrorMessages] = useState({});
 
+  const validateForm = () => {
+    const errors = {};
+    if (username.length <= 6) errors.username = "Username must be longer than 6 characters";
+    if (password.length <= 6) errors.password = "Password must be longer than 6 characters";
+    if (!gender) errors.gender = "Gender is required";
+    if (phone.length <= 7) errors.phone = "Phone number must be longer than 7 digits";
+
+    return errors;
+  };
+
   const handleRegisterClick = async (e) => {
     e.preventDefault();
     setErrorMessages({});
+    const errors = validateForm();
+
+    if (Object.keys(errors).length > 0) {
+      setErrorMessages(errors);
+      return;
+    }
+
     try {
       const response = await axios.post('http://127.0.0.1:5000/api/authentication/register', {
         username,

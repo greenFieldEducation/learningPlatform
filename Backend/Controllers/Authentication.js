@@ -9,11 +9,25 @@ const cloudinary = require('../Cloudinary/Cloudinary.js')
 
 const SECRET_KEY = "Learniverse"
 
-const validateRegister = [
-    body('username').notEmpty().withMessage('Username is required'),
-    body('email').isEmail().withMessage('Valid email is required'),
-    body('password').isLength({ min: 6 }).withMessage('Password must be at least 6 characters long'),   
-];
+// const validateRegister = [
+//     body('username').notEmpty().withMessage('Username is required'),
+//     body('email').isEmail().withMessage('Valid email is required'),
+//     body('password').isLength({ min: 6 }).withMessage('Password must be at least 6 characters long'),   
+// ];
+
+    const validateRegister = [
+    body('username').isLength({ min: 7 }).withMessage('Username must be longer than 6 characters'),
+    body('password').isLength({ min: 7 }).withMessage('Password must be longer than 6 characters'),
+    body('gender').notEmpty().withMessage('Gender is required'),
+    body('phone').isLength({ min: 8 }).withMessage('Phone number must be longer than 7 digits'),
+    body('username').custom(async value => {
+      const user = await User.findOne({ username: value });
+      if (user) {
+        throw new Error('Username already in use');
+      }
+      return true;
+    })
+  ]
 
 exports.register = async (req, res) => {
     const errors = validationResult(req);
