@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { FaHome, FaPlus, FaEdit, FaSignOutAlt, FaBell } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
 
 const InstructorDashboard = () => {
   const [motivationalPhrase, setMotivationalPhrase] = useState('');
   const [courses, setCourses] = useState([]);
   const [enrolledStudents, setEnrolledStudents] = useState([]);
+  const navigate = useNavigate()
+
 
   useEffect(() => {
     generateMotivationalPhrase();
-    // dummy data
     const dummyCourses = [
       {
         id: 1,
@@ -52,6 +54,11 @@ const InstructorDashboard = () => {
     setMotivationalPhrase(phrases[randomIndex]);
   };
 
+  const handleLogout =()=>{
+    localStorage.removeItem('token')
+    navigate('/')
+  }
+
   return (
     <div className="flex min-h-screen bg-gray-100">
       {/* Sidebar */}
@@ -60,7 +67,7 @@ const InstructorDashboard = () => {
         <FaPlus className="my-4 text-2xl cursor-pointer hover:text-blue-300" />
         <FaEdit className="my-4 text-2xl cursor-pointer hover:text-blue-300" />
         <FaBell className="my-4 text-2xl cursor-pointer hover:text-blue-300" /> {/* Notification icon */}
-        <FaSignOutAlt className="my-4 text-2xl cursor-pointer hover:text-blue-300" />
+        <FaSignOutAlt className="my-4 text-2xl cursor-pointer hover:text-blue-300" onClick={handleLogout} />
       </div>
 
       {/* Main Content */}

@@ -1,11 +1,11 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import LandingPage from './Components/LandingPage/LandingPage.jsx';
-import SignUp from './Components/SignUp.jsx';
-import Login from './Components/Login.jsx';
+import SignUp from './Components/Auth/SignUp.jsx';
+import Login from './Components/Auth/Login.jsx';
 import StudentDashboard from './Components/studentDashboard/StudentDashboard.jsx';
 import InstructorDashboard from './Components/instructorDashbord.jsx';
-
+import CourseDetails from './Components/CourseDetail.jsx'
 const App = () => (
   
   <Router>
@@ -15,6 +15,7 @@ const App = () => (
       <Route path="/login" element={<Login />} />
       <Route path="/student-dashboard" element={<StudentDashboard />} />
       <Route path="/instructor-dashboard" element={<InstructorDashboard />} />
+      <Route path ="/course-detail/:id" element={<CourseDetails />} />
     </Routes>
   </Router>
 );
