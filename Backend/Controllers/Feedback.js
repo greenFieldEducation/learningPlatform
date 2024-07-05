@@ -10,3 +10,4 @@ const getAllFeedbacks = async (req, res) => {
 }
 
 module.exports = getAllFeedbacks
+
