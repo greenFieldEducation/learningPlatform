@@ -1,4 +1,4 @@
-const Instructor = require('../models/Instructor');
+const Instructor = require('../DataBase/Models/Instructor');
 
 const subscriptionController = {
     // Save subscription details
