@@ -40,11 +40,8 @@ class Student extends Model {
       role: {
         type: DataTypes.STRING,
         defaultValue: "student"
-      },
-      image: {
-        type: DataTypes.STRING,
-        allowNull: true,
       }
+     
     }, {
       sequelize,
       modelName: 'Student',

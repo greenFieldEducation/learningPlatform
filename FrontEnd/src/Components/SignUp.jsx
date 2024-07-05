@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import Navbar from './LandingPage/Navbar';
 import axios from 'axios';
-import { Link  }from "react-router-dom";
-
+import { Link } from 'react-router-dom';
 
 const SignUp = () => {
   const [username, setUsername] = useState("");
@@ -13,7 +12,6 @@ const SignUp = () => {
   const [fields, setFields] = useState("");
   const [role, setRole] = useState("student");
   const [errorMessages, setErrorMessages] = useState({});
- 
 
   const handleRegisterClick = async (e) => {
     e.preventDefault();
@@ -51,12 +49,11 @@ const SignUp = () => {
     <div>
       <Navbar />
       <div className="min-h-screen bg-gray-100 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
-        <div className="sm:mx-auto sm:w-full sm:max-w-md">
-        </div>
+        <div className="sm:mx-auto sm:w-full sm:max-w-md"></div>
 
         <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
           <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
-          <h2 className="text-2xl font-semibold mb-6 text-center">Sign Up</h2>
+            <h2 className="text-2xl font-semibold mb-6 text-center">Sign Up</h2>
             <form className="space-y-6" onSubmit={handleRegisterClick}>
               <div>
                 <label htmlFor="username" className="block text-sm font-medium text-gray-700">
@@ -70,7 +67,9 @@ const SignUp = () => {
                     autoComplete="username"
                     required
                     onChange={(e) => setUsername(e.target.value)}
-                    className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                    className={`appearance-none block w-full px-3 py-2 border ${
+                      errorMessages.username ? 'border-red-500' : 'border-gray-300'
+                    } rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm`}
                   />
                   {errorMessages.username && (
                     <p className="text-red-500 text-sm mt-1">{errorMessages.username}</p>
@@ -90,7 +89,9 @@ const SignUp = () => {
                     autoComplete="email"
                     required
                     onChange={(e) => setEmail(e.target.value)}
-                    className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                    className={`appearance-none block w-full px-3 py-2 border ${
+                      errorMessages.email ? 'border-red-500' : 'border-gray-300'
+                    } rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm`}
                   />
                   {errorMessages.email && (
                     <p className="text-red-500 text-sm mt-1">{errorMessages.email}</p>
@@ -110,7 +111,9 @@ const SignUp = () => {
                     autoComplete="current-password"
                     required
                     onChange={(e) => setPassword(e.target.value)}
-                    className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                    className={`appearance-none block w-full px-3 py-2 border ${
+                      errorMessages.password ? 'border-red-500' : 'border-gray-300'
+                    } rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm`}
                   />
                   {errorMessages.password && (
                     <p className="text-red-500 text-sm mt-1">{errorMessages.password}</p>
@@ -127,7 +130,9 @@ const SignUp = () => {
                     id="gender"
                     name="gender"
                     onChange={(e) => setGender(e.target.value)}
-                    className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                    className={`appearance-none block w-full px-3 py-2 border ${
+                      errorMessages.gender ? 'border-red-500' : 'border-gray-300'
+                    } rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm`}
                   >
                     <option value="">Select gender</option>
                     <option value="Men">Men</option>
@@ -150,7 +155,9 @@ const SignUp = () => {
                     type="text"
                     required
                     onChange={(e) => setPhone(e.target.value)}
-                    className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                    className={`appearance-none block w-full px-3 py-2 border ${
+                      errorMessages.phone ? 'border-red-500' : 'border-gray-300'
+                    } rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm`}
                   />
                   {errorMessages.phone && (
                     <p className="text-red-500 text-sm mt-1">{errorMessages.phone}</p>
@@ -167,7 +174,12 @@ const SignUp = () => {
                     id="fields"
                     name="fields"
                     onChange={(e) => setFields(e.target.value)}
-                    className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                    disabled={role === "instructor"}
+                    className={`appearance-none block w-full px-3 py-2 border ${
+                      errorMessages.fields ? 'border-red-500' : 'border-gray-300'
+                    } rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm ${
+                      role === "instructor" ? "bg-gray-200" : ""
+                    }`}
                   >
                     <option value="">Select field</option>
                     <option value="Math">Math</option>
@@ -192,7 +204,9 @@ const SignUp = () => {
                     id="role"
                     name="role"
                     onChange={(e) => setRole(e.target.value)}
-                    className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                    className={`appearance-none block w-full px-3 py-2 border ${
+                      errorMessages.role ? 'border-red-500' : 'border-gray-300'
+                    } rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm`}
                   >
                     <option value="student">Student</option>
                     <option value="instructor">Instructor</option>
@@ -218,9 +232,9 @@ const SignUp = () => {
 
             <p className="mt-6 text-center text-sm text-gray-600">
               Already have an account?{' '}
-              <a href="#" className="font-medium text-indigo-600 hover:text-indigo-500">
-              <Link to="/login">Sign in</Link>
-              </a>
+              <Link to="/login" className="font-medium text-indigo-600 hover:text-indigo-500">
+                Sign in
+              </Link>
             </p>
           </div>
         </div>

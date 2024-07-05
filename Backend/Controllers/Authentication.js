@@ -1,4 +1,3 @@
-
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const Student = require('../DataBase/Models/Students.js');
@@ -21,7 +20,7 @@ exports.register = async (req, res) => {
     if (!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() });
     }
-    const { username, email, password, role, phone, gender } = req.body;
+    const { username, email, password, role, phone, gender,fields } = req.body;
     try {
         let existingUser
         if (role === "student") {
@@ -46,12 +45,12 @@ exports.register = async (req, res) => {
         const hashedPassword = await bcrypt.hash(password, salt)
 
         // Uploading the image to Cloudinary
-        let imageUrl = ''
-        const uploadResult = await cloudinary.uploader.upload(req.body.image, {
-            folder: 'learniverse_users'
-        })
-        console.log(uploadResult)
-        imageUrl = uploadResult.secure_url
+        // let imageUrl = ''
+        // const uploadResult = await cloudinary.uploader.upload(req.body.image, {
+        //     folder: 'learniverse_users'
+        // })
+        // console.log(uploadResult)
+        // imageUrl = uploadResult.secure_url
 
         let newUser
         if (role === "student") {
@@ -62,6 +61,7 @@ exports.register = async (req, res) => {
                 role,
                 phone,
                 gender,
+                fields
             })
         } else if (role === "instructor") {
             newUser = await Instructor.create({
@@ -130,5 +130,3 @@ exports.login = [
 ]
 exports.verifyToken = verifyToken;
 exports.validateRegister = validateRegister
-
-
