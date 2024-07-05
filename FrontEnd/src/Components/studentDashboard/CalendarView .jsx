@@ -21,16 +21,30 @@ const events = [
 
 const CalendarView = () => {
   return (
-    <div className="bg-white rounded-lg shadow-lg p-4 w-full md:w-3/4 lg:w-1/2 mx-auto mt-4">
-      <h2 className="text-xl font-bold mb-4">Upcoming Courses</h2>
+    <div className="bg-white rounded-lg shadow-lg p-4 w-full md:w-3/4 lg:w-2/3 mx-auto mt-4">
+      <h2 className="text-xl font-bold mb-4 text-center">Upcoming Courses</h2>
       <Calendar
         localizer={localizer}
         events={events}
         startAccessor="start"
         endAccessor="end"
-        style={{ height: 400 }}
+        style={{ height: 500 }}
+        eventPropGetter={(event) => ({
+          className: 'bg-blue-500 text-white rounded-lg p-2',
+        })}
+        components={{
+          event: CustomEvent,
+        }}
       />
     </div>
+  );
+};
+
+const CustomEvent = ({ event }) => {
+  return (
+    <span className="text-sm">
+      {event.title}
+    </span>
   );
 };
 

@@ -1,10 +1,9 @@
 import React, { useRef } from 'react';
 import Welcome from './WelcomeSection.jsx';
 import StudentProfileCard from './StudentProfileCard.jsx';
-import CourseEnrollment from './CourseEnrollment.jsx';
 import Sidebar from './SideBar.jsx';
 import CalendarView from './CalendarView .jsx';
-
+import MyCourses from './MyCourses.jsx';
 const StudentDashboard = () => {
   const welcomeRef = useRef(null);
   const calendarRef = useRef(null);
@@ -22,6 +21,11 @@ const StudentDashboard = () => {
     }
   };
 
+  // courseData.js
+
+
+  
+
   return (
     <div className="flex bg-gray-200 min-h-screen">
       <Sidebar scrollToSection={scrollToSection} />
@@ -31,8 +35,11 @@ const StudentDashboard = () => {
             <Welcome />
           </div>
         </div>
-        <div>
-          <CourseEnrollment />
+        <div className="mb-8">
+          <h2 className="text-2xl font-bold mb-4">My Courses</h2>
+          
+            < MyCourses/>
+          
         </div>
         <div ref={calendarRef} className="mt-4">
           <CalendarView />
