@@ -1,58 +1,98 @@
-const Student = require('../DataBase/Models/Students.js');
-const Course = require('../DataBase/Models/Courses.js');
-const EnrollmentRequest = require('../DataBase/Models/EnrollmentRequest.js');
-const Instructor = require('../DataBase/Models/Instructor.js');
-const webpush = require('../config/webPush');
-const { Op } = require('sequelize');
+const EnrollmentRequest = require("../DataBase/Models/EnrollmentRequest");
+const Course = require("../DataBase/Models/Courses");
+const Instructor = require("../DataBase/Models/Instructor");
+const webpush = require("../config/webPush");
+const { Op } = require("sequelize");
 
-async function enrollStudent(req, res) {
-  const { studentId, courseId } = req.body;
-
+// Function to send notification to instructor
+async function sendNotificationToInstructor(instructorId, courseId) {
   try {
-    // Fetch Student and Course instances
-    const student = await Student.findByPk(studentId);
-    const course = await Course.findByPk(courseId);
+    // Retrieve instructor's subscription details from database
+    const instructor = await Instructor.findByPk(instructorId);
+    const subscription = instructor.subscription; // Example field from your Instructor model
 
-    if (!student || !course) {
-      return res.status(404).json({ error: 'Student or Course not found' });
-    }
+    // Example notification payload
+    const notificationPayload = {
+      title: "New Enrollment Request",
+      body: `You have a new enrollment request for course ${courseId}`,
+      // Add any additional data or URLs as needed
+    };
 
-    // Create EnrollmentRequest
-    const enrollmentRequest = await EnrollmentRequest.create({
-      studentId: student.id,
-      courseId: course.id,
-      status: 'pending',
-    });
-
-    // Notify the instructor
-    const instructor = await Instructor.findOne({
-      where: { id: course.instructorId },
-    });
-
-    if (instructor && instructor.pushSubscription) {
-      const payload = JSON.stringify({
-        title: 'New Enrollment Request',
-        body: `Student ${studentId} has requested to enroll in ${course.title}`,
-      });
-
-      webpush.sendNotification(instructor.pushSubscription, payload)
-        .then(() => {
-          console.log('Notification sent successfully');
-        })
-        .catch(err => {
-          console.error('Error sending notification:', err);
-        });
-    }
-
-    console.log(`Enrollment request created for Student ${student.id} in Course ${course.id}`);
-
-    return res.status(201).json(enrollmentRequest);
+    // Send notification using web-push
+    await webpush.sendNotification(
+      subscription,
+      JSON.stringify(notificationPayload)
+    );
   } catch (error) {
-    console.error('Error creating enrollment request:', error);
-    return res.status(500).json({ error: 'Failed to create enrollment request' });
+    console.error("Error sending notification to instructor:", error);
+    throw error;
   }
 }
 
-module.exports = {
-  enrollStudent,
+// Controller methods
+const enrollmentRequestController = {
+  // Create enrollment request
+  async createEnrollmentRequest(req, res) {
+    const { studentId, courseId } = req.body;
+
+    try {
+      // Create enrollment request
+      const enrollmentRequest = await EnrollmentRequest.create({
+        studentId,
+        courseId,
+        status: "pending",
+      });
+
+      // Optionally, retrieve course details
+      const course = await Course.findByPk(courseId);
+
+      // Notify instructor (web-push notification)
+      if (course) {
+        const instructorId = course.instructorId;
+
+        // Send notification to instructor
+        await sendNotificationToInstructor(instructorId, courseId);
+
+        // Update course state to 'pending' (if needed)
+        await Course.update({ state: "pending" }, { where: { id: courseId } });
+
+        return res.status(201).json(enrollmentRequest);
+      } else {
+        throw new Error("Course not found");
+      }
+    } catch (error) {
+      console.error("Error creating enrollment request:", error);
+      return res.status(500).json({ error: "Internal server error" });
+    }
+  },
+
+  // Accept enrollment request
+  async acceptEnrollmentRequest(req, res) {
+    const { enrollmentRequestId, courseId } = req.params;
+
+    try {
+      // Update enrollment request status to 'accepted'
+      await EnrollmentRequest.update(
+        { status: "accepted" },
+        {
+          where: { id: enrollmentRequestId, courseId },
+        }
+      );
+
+      // Update course state to 'accepted'
+      await Course.update({ state: "accepted" }, { where: { id: courseId } });
+
+      // Optionally, notify student (web-push notification)
+      // Example: sendNotificationToStudent(studentId, courseId, 'accepted');
+
+      return res
+        .status(200)
+        .json({ message: "Enrollment request accepted successfully" });
+    } catch (error) {
+      console.error("Error accepting enrollment request:", error);
+      return res.status(500).json({ error: "Internal server error" });
+    }
+  },
 };
+
+module.exports = enrollmentRequestController;

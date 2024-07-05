@@ -25,7 +25,7 @@ class Student extends Model {
       },
       gender: {
         type: DataTypes.ENUM('Men', 'Women'),
-        allowNull: false,
+        allowNull: true,
       },
       phone: {
         type: DataTypes.STRING,
