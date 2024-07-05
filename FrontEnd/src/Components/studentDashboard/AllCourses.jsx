@@ -1,74 +1,27 @@
 import React, { useState } from 'react';
-import DetailsPopUpModal from "./DetailsPopUpModal.jsx"
+import DetailsPopUpModal from './DetailsPopUpModal.jsx';
 
-const dummyAllCourses = [
-  {
-    id: 1,
-    title: 'Introduction to Programming',
-    description: 'Learn the fundamentals of programming concepts and languages. This course covers variables, loops, and functions.',
-    instructor: 'John Doe',
-    rating: 4.5,
-    startDate: '2024-08-01',
-  },
-  {
-    id: 2,
-    title: 'Creative Writing',
-    description: 'Explore different writing styles and techniques to develop your creative voice. Learn to craft compelling stories and poems.',
-    instructor: 'Jane Smith',
-    rating: 4.7,
-    startDate: '2024-09-15',
-  },
-  {
-    id: 3,
-    title: 'Macroeconomics',
-    description: 'Gain insights into economic growth, inflation, unemployment, and government policies. Understand macroeconomic indicators and models.',
-    instructor: 'Alice Johnson',
-    rating: 4.3,
-    startDate: '2024-07-20',
-  },
-  {
-    id: 4,
-    title: 'Digital Marketing',
-    description: 'Learn how to create, implement, and manage successful digital marketing campaigns. Topics include SEO, social media marketing, and email marketing.',
-    instructor: 'Michael Brown',
-    rating: 4.8,
-    startDate: '2024-08-10',
-  },
-  {
-    id: 5,
-    title: 'Introduction to Psychology',
-    description: 'Understand the basics of human behavior and mental processes. Topics include cognitive, social, and developmental psychology.',
-    instructor: 'Emily Davis',
-    rating: 4.6,
-    startDate: '2024-09-01',
-  },
-  {
-    id: 6,
-    title: 'Graphic Design',
-    description: 'Learn the principles of design and how to create visually appealing graphics. This course covers typography, color theory, and layout design.',
-    instructor: 'Robert Wilson',
-    rating: 4.9,
-    startDate: '2024-10-05',
-  },
-];
-
-const AllCourses = () => {
+const AllCourses = ({ courses }) => {
   const [showAll, setShowAll] = useState(false);
   const [selectedCourse, setSelectedCourse] = useState(null);
 
-  const coursesToDisplay = showAll ? dummyAllCourses : dummyAllCourses.slice(0, 3);
+  // Function to truncate text to a specified length
+  const truncateText = (text, maxLength) => {
+    if (text.length <= maxLength) return text;
+    return text.slice(0, maxLength) + '...';
+  };
 
+  // Determine which courses to display based on showAll state
+  const coursesToDisplay = showAll ? courses : courses.slice(0, 3);
+
+  // Handle click to show more details in modal
   const handleMoreClick = (course) => {
     setSelectedCourse(course);
   };
 
+  // Handle modal close
   const handleCloseModal = () => {
     setSelectedCourse(null);
-  };
-
-  const truncateText = (text, maxLength) => {
-    if (text.length <= maxLength) return text;
-    return text.slice(0, maxLength) + '...';
   };
 
   return (
@@ -100,6 +53,7 @@ const AllCourses = () => {
           </button>
         </div>
       )}
+      {/* Modal to display course details */}
       <DetailsPopUpModal isOpen={!!selectedCourse} onClose={handleCloseModal} course={selectedCourse} />
     </div>
   );

@@ -6,6 +6,20 @@ import Login from './Components/Auth/Login.jsx';
 import StudentDashboard from './Components/studentDashboard/StudentDashboard.jsx';
 import InstructorDashboard from './Components/instructorDashbord.jsx';
 import CourseDetails from './Components/CourseDetail.jsx'
+import  {subscribeUser} from './subscribeUser.js'
+
+
+function App() {
+  useEffect(() => {
+      subscribeUser();
+  }, []);
+}
+
+
+
+
+
+
 const App = () => (
   
   <Router>
