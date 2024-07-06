@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { FaHome, FaPlus, FaEdit, FaSignOutAlt, FaBell } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const InstructorDashboard = ({ instructorName, instructorEmail, instructorImage }) => {
     const [motivationalPhrase, setMotivationalPhrase] = useState('');
@@ -10,29 +11,8 @@ const InstructorDashboard = ({ instructorName, instructorEmail, instructorImage 
 
     useEffect(() => {
         generateMotivationalPhrase();
-        // Dummy data initialization
-        const dummyCourses = [
-            {
-                id: 1,
-                name: 'Mathematics 101',
-                description: 'Learn the basics of mathematics.',
-                imageUrl: 'https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1537629942l/3647656.jpg',
-            },
-            {
-                id: 2,
-                name: 'Economics for Beginners',
-                description: 'Introduction to economics principles.',
-                imageUrl: 'https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1537629942l/3647656.jpg',
-            },
-            {
-                id: 3,
-                name: 'Introduction to Physics',
-                description: 'Explore the fundamental principles of physics.',
-                imageUrl: 'https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1537629942l/3647656.jpg',
-            },
-        ];
-        setCourses(dummyCourses);
-
+        fetchCourses();
+        // Dummy data initialization for enrolled students
         const dummyEnrolledStudents = [
             { id: 1, name: 'Samir', email: 'samir@gmail.com', course: 'Mathematics 101', imageUrl: 'https://res.cloudinary.com/ali22/image/upload/v1711484433/koss/gkb80z68jhyqlbgusyf1.jpg' },
             { id: 2, name: 'Samir', email: 'samir@gmail.com', course: 'Economics for Beginners', imageUrl: 'https://res.cloudinary.com/ali22/image/upload/v1711484433/koss/gkb80z68jhyqlbgusyf1.jpg' },
@@ -40,6 +20,15 @@ const InstructorDashboard = ({ instructorName, instructorEmail, instructorImage 
         ];
         setEnrolledStudents(dummyEnrolledStudents);
     }, []);
+
+    const fetchCourses = async () => {
+        try {
+            const response = await axios.get('http://127.0.0.1:5000/api/getAllCourses');
+            setCourses(response.data);
+        } catch (error) {
+            console.error('Error fetching courses:', error);
+        }
+    };
 
     const generateMotivationalPhrase = () => {
         const phrases = [
@@ -86,25 +75,21 @@ const InstructorDashboard = ({ instructorName, instructorEmail, instructorImage 
                     </div>
                 </div>
 
-                {/* Welcome Message and Motivational Phrase */}
-                <div className="bg-white p-6 rounded-lg shadow-md max-w-md mb-6">
-                    <h2 className="text-xl font-semibold text-blue-700 mb-4">Welcome, Instructor!</h2>
-                    <p className="text-lg text-gray-700 mb-4">We are glad to have you here. Keep inspiring and teaching!</p>
-                    <div className="bg-blue-100 border-l-4 border-blue-500 p-3 rounded-lg">
-                        <p className="text-lg text-blue-800">{motivationalPhrase}</p>
-                    </div>
+                {/* Motivational Phrase */}
+                <div className="bg-blue-100 text-blue-700 p-6 rounded-lg shadow-md max-w-md self-start mb-6">
+                    <p className="text-lg font-semibold">{motivationalPhrase}</p>
                 </div>
 
                 {/* Courses Section */}
                 <div className="mt-10 w-full">
-                    <h2 className="text-2xl font-semibold text-blue-700 mb-4">Your Courses</h2>
+                    <h2 className="text-2xl font-semibold text-blue-700 mb-4">Courses</h2>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                         {courses.map(course => (
                             <div key={course.id} className="bg-white rounded-lg shadow-md overflow-hidden">
-                                <img src={course.imageUrl} alt={course.name} className="w-full h-40 object-cover" />
                                 <div className="p-4">
-                                    <h3 className="text-lg font-semibold text-blue-700 mb-2">{course.name}</h3>
-                                    <p className="text-gray-600">{course.description}</p>
+                                    <h3 className="text-lg font-semibold text-blue-700 mb-2">{course.title}</h3>
+                                    <p className="text-gray-700">{course.description}</p>
+                                    <p className="text-gray-500">{course.category}</p>
                                 </div>
                             </div>
                         ))}
@@ -113,15 +98,15 @@ const InstructorDashboard = ({ instructorName, instructorEmail, instructorImage 
 
                 {/* Enrolled Students Section */}
                 <div className="mt-10 w-full">
-                    <h2 className="text-2xl font-semibold text-blue-700 mb-4">Your Enrolled Students</h2>
+                    <h2 className="text-2xl font-semibold text-blue-700 mb-4">Enrolled Students</h2>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                         {enrolledStudents.map(student => (
                             <div key={student.id} className="bg-white rounded-lg shadow-md overflow-hidden">
                                 <img src={student.imageUrl} alt={student.name} className="w-full h-40 object-cover" />
                                 <div className="p-4">
                                     <h3 className="text-lg font-semibold text-blue-700 mb-2">{student.name}</h3>
-                                    <p className="text-gray-600">{student.email}</p>
-                                    <p className="text-gray-600">Course: {student.course}</p>
+                                    <p className="text-gray-700">{student.course}</p>
+                                    <p className="text-gray-500">{student.email}</p>
                                 </div>
                             </div>
                         ))}
