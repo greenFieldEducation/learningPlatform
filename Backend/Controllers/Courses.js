@@ -25,7 +25,22 @@ async function getAllCourses(req, res) {
     }
 }
 
+
+const getCourseById= async(req,res)=>{
+    try {
+        const course = await Course.findByPk(req.params.courseId);
+        if (!course) {
+            return res.status(404).json({ message: 'Course not found' });
+        }
+        res.status(200).json(course);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+
+}
+
 module.exports = {
     createCourse,
-    getAllCourses
+    getAllCourses,
+    getCourseById
 };

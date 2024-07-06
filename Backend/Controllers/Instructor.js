@@ -83,7 +83,7 @@ const uploadProfileImage = async (req, res) => {
 }
 
 
-const UpdateCourse= async(req,res)=>{
+const UpdateCourse = async (req, res) => {
     const { instructorId, courseId } = req.params;
     const updateData = req.body;
 
@@ -95,7 +95,7 @@ const UpdateCourse= async(req,res)=>{
             }
         });
         if (!course) {
-            return res.status(404).json({ message: 'Course not found ' });
+            return res.status(404).json({ message: 'Course not found' });
         }
 
         await course.update(updateData);
@@ -103,8 +103,7 @@ const UpdateCourse= async(req,res)=>{
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
-    
-}
+};
 
 
 

@@ -5,9 +5,9 @@ import SignUp from './Components/Auth/SignUp.jsx';
 import Login from './Components/Auth/Login.jsx';
 import StudentDashboard from './Components/studentDashboard/StudentDashboard.jsx';
 import InstructorDashboard from './Components/instructorDashbord.jsx';
-import CourseDetails from './Components/CourseDetail.jsx'
 import UpdateInstructorProfile from './Components/UpdateInstructorProfile.jsx';
 import AddCourse from './Components/AddCourse.jsx'; 
+import InstructorCourseDetail from './Components/InstructorCourseDetail.jsx';
 const App = () => (
   
   <Router>
@@ -17,9 +17,9 @@ const App = () => (
       <Route path="/login" element={<Login />} />
       <Route path="/student-dashboard" element={<StudentDashboard />} />
       <Route path="/instructor-dashboard" element={<InstructorDashboard />} />
-      <Route path ="/course-detail/:id" element={<CourseDetails />} />
       <Route path="/update-profile" element={<UpdateInstructorProfile  />} />
       <Route path="/add-course" element={<AddCourse />} /> 
+      <Route path="/instructor-course-detail/:id" element={<InstructorCourseDetail />} />
     </Routes>
   </Router>
 );
