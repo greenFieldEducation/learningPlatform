@@ -13,6 +13,8 @@ const feedbackRoutes = require('../Routes/Feedback.js')
 const subscriptionRoutes = require('../Routes/subscriptionRoutes.js');
 const enrollmentRequestRoutes = require('../Routes/enrollmentRequestRoutes.js');
 const course = require ('../Routes/Courses.js')
+
+
 app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
@@ -21,12 +23,17 @@ app.use('/api/authentication', authenticationRoutes)
 app.use('/api/feedbacks', feedbackRoutes)
 app.use("/api/student", studentrouter)
 app.use("/api", instructorRoutes)
-app.use('/api', subscriptionRoutes);
+app.use('/api/notification', subscriptionRoutes);
 app.use('/api', enrollmentRequestRoutes);
 app.use('/api/course',course );
+app.use('/api/authentication', authenticationRoutes);
+app.use('/api/feedbacks', feedbackRoutes);
+app.use("/api/student", studentrouter); // Ensure this is correct
+app.use("/api", instructorRoutes);
+// app.use('/api', enrollementRoute);
 
 app.listen(PORT, function () {
-    console.log("listening on port 5000!")
-})
+    console.log("listening on port 5000!");
+});
 
-module.exports = app
+module.exports = app;

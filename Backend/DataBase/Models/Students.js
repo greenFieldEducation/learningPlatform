@@ -31,7 +31,6 @@ class Student extends Model {
         type: DataTypes.STRING,
         allowNull: false,
       },
-
      fields:{
       type: DataTypes.ENUM('Math','Economy','Management','Science','History&Geography','Art&Literature'),
       allowNull: true

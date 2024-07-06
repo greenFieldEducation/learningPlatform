@@ -7,13 +7,14 @@ import StudentDashboard from './Components/studentDashboard/StudentDashboard.jsx
 import InstructorDashboard from './Components/instructorDashbord.jsx';
 import CourseDetails from './Components/CourseDetail.jsx'
 import  {subscribeUser} from './subscribeUser.js'
+import StudentProfile from './Components/studentDashboard/StudentProfile.jsx';
 
 
-function App() {
+
   useEffect(() => {
       subscribeUser();
   }, []);
-}
+
 
 
 
@@ -30,6 +31,7 @@ const App = () => (
       <Route path="/student-dashboard" element={<StudentDashboard />} />
       <Route path="/instructor-dashboard" element={<InstructorDashboard />} />
       <Route path ="/course-detail/:id" element={<CourseDetails />} />
+      <Route path="/student-dashboard/profile" element={<StudentProfile/>} />
     </Routes>
   </Router>
 );

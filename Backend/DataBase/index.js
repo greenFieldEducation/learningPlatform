@@ -21,12 +21,12 @@ Instructor.associate({ Course })
 Course.associate({ Instructor, EnrollmentRequest })
 EnrollmentRequest.associate({ Student, Course })
 
-sequelize
-  .sync({ force: true })
-  .then(() => {
-    console.log("Database & tables created!")
-  })
-  .catch((error) => console.error("Unable to create tables:", error))
+// sequelize
+//   .sync({ force: true })
+//   .then(() => {
+//     console.log("Database & tables created!")
+//   })
+//   .catch((error) => console.error("Unable to create tables:", error))
 
 
 async function testConnection() {

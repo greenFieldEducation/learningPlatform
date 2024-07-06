@@ -5,15 +5,23 @@ const DetailsPopUpModal = ({ isOpen, onClose, course }) => {
   const [enrolling, setEnrolling] = useState(false);
   const [error, setError] = useState(null);
   const [enrolled, setEnrolled] = useState(false);
+  const [enrollmentStatus, setEnrollmentStatus] = useState(''); // New state to track enrollment status
 
   const handleEnroll = async () => {
     setEnrolling(true);
     setError(null);
 
     try {
-      const response = await axios.post('http://127.0.0.1:5000/api/courseEnroll/enrollment-request', { courseId: course.id });
-      console.log('Enrollment successful:', response.data);
-      setEnrolled(true);
+      const response = await axios.post('http://127.0.0.1:5000/api/courseEnroll/enrollment-request', {
+        courseId: course.id,
+      });
+
+      if (response.status === 200) {
+        setEnrolled(true);
+        setEnrollmentStatus(response.data.status); // Update enrollment status
+      } else {
+        setError('Failed to enroll. Please try again later.');
+      }
     } catch (error) {
       console.error('Failed to enroll:', error);
       setError('Failed to enroll. Please try again later.');
@@ -32,9 +40,10 @@ const DetailsPopUpModal = ({ isOpen, onClose, course }) => {
         <p className="mb-2"><strong>Instructor:</strong> {course.instructor}</p>
         <p className="mb-2"><strong>Rating:</strong> {course.rating}</p>
         <p className="mb-2"><strong>Start Date:</strong> {course.startDate}</p>
-        {enrolled ? (
+        {enrolled && enrollmentStatus === 'accepted' && (
           <p className="text-green-600 mb-4">You have successfully enrolled in this course!</p>
-        ) : (
+        )}
+        {!enrolled && (
           <button
             className={`mt-4 px-4 py-2 ${enrolling ? 'bg-gray-500' : 'bg-indigo-500'} text-white rounded-lg hover:bg-indigo-600 focus:outline-none focus:bg-indigo-700 transition duration-200`}
             onClick={handleEnroll}
