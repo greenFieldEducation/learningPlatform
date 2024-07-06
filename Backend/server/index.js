@@ -15,7 +15,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use('/api/authentication', authenticationRoutes);
 app.use('/api/feedbacks', feedbackRoutes);
-app.use("/api/student", studentrouter); // Ensure this is correct
+app.use("/api/student", studentrouter); 
 app.use("/api", instructorRoutes);
 app.use('/api', enrollementRoute);
 
