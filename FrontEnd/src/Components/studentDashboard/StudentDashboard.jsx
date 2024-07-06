@@ -1,7 +1,6 @@
 import React, { useRef, useEffect, useState } from 'react';
 import axios from 'axios';
 import Welcome from './WelcomeSection.jsx';
-import StudentProfileCard from './StudentProfileCard.jsx';
 import Sidebar from './SideBar.jsx';
 import CalendarView from './CalendarView .jsx';
 import MyCourses from './MyCourses.jsx';
@@ -19,7 +18,7 @@ const StudentDashboard = () => {
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        const response = await axios.get("http://127.0.0.1:5000/course/getAllCourses"); 
+        const response = await axios.get("http://127.0.0.1:5000/api/course/getAllCourses"); 
         setCourses(response.data); 
         setLoading(false);
       } catch (error) {

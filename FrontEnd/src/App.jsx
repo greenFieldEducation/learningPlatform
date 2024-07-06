@@ -8,14 +8,13 @@ import InstructorDashboard from './Components/instructorDashbord.jsx';
 import CourseDetails from './Components/CourseDetail.jsx'
 import UpdateInstructorProfile from './Components/UpdateInstructorProfile.jsx';
 import AddCourse from './Components/AddCourse.jsx'; 
-import  {subscribeUser} from './subscribeUser.js'
 import StudentProfile from './Components/studentDashboard/StudentProfile.jsx';
 
 
 
-  useEffect(() => {
-      subscribeUser();
-  }, []);
+  // useEffect(() => {
+  //     subscribeUser();
+  // }, []);
 
 
 

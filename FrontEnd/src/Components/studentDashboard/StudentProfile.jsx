@@ -8,6 +8,7 @@ const StudentProfile = () => {
   const [serviceWorkerRegistration, setServiceWorkerRegistration] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [notificationsEnabled, setNotificationsEnabled] = useState(false);
 
   useEffect(() => {
     // Fetch student profile data
@@ -37,6 +38,14 @@ const StudentProfile = () => {
     }
   }, []);
 
+  const handlePermissionGranted = () => {
+    setNotificationsEnabled(true);
+  };
+
+  const handlePermissionDenied = () => {
+    setNotificationsEnabled(false);
+  };
+
   if (loading) return <div>Loading...</div>;
   if (error) return <div>{error}</div>;
 
@@ -57,9 +66,15 @@ const StudentProfile = () => {
             <p className="mb-2"><strong>Phone:</strong> {student.phone}</p>
             <p className="mb-2"><strong>Field:</strong> {student.fields}</p>
             <p className="mb-2"><strong>Role:</strong> {student.role}</p>
-            <RequestNotificationPermission />
-            {serviceWorkerRegistration && (
-              <SubscribeToNotifications serviceWorkerRegistration={serviceWorkerRegistration} />
+            <RequestNotificationPermission 
+              onPermissionGranted={handlePermissionGranted}
+              onPermissionDenied={handlePermissionDenied}
+            />
+            {notificationsEnabled && serviceWorkerRegistration && (
+              <SubscribeToNotifications 
+                serviceWorkerRegistration={serviceWorkerRegistration} 
+                studentId={student.id} 
+              />
             )}
           </div>
         )}
@@ -68,4 +83,4 @@ const StudentProfile = () => {
   );
 };
 
-export default StudentProfile ;
+export default StudentProfile;

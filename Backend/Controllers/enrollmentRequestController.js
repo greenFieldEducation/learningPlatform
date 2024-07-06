@@ -1,7 +1,7 @@
 const EnrollmentRequest = require('../DataBase/Models/EnrollmentRequest');
 const Course = require('../DataBase/Models/Courses');
 const Instructor = require('../DataBase/Models/Instructor');
-const webpush = require('../config/webPushConfig');
+const webpush = require('../config/webPush');
 const { Op } = require('sequelize');
 
 // Function to send notification to instructor
