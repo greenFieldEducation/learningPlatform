@@ -12,6 +12,7 @@ const authenticationRoutes = require('../Routes/Authentication.js')
 const feedbackRoutes = require('../Routes/Feedback.js')
 const subscriptionRoutes = require('../Routes/subscriptionRoutes.js');
 const enrollmentRequestRoutes = require('../Routes/enrollmentRequestRoutes.js');
+const courseRoutes = require('../Routes/Courses.js');
 const course = require ('../Routes/Courses.js')
 
 
@@ -28,9 +29,10 @@ app.use('/api', enrollmentRequestRoutes);
 app.use('/api/course',course );
 app.use('/api/authentication', authenticationRoutes);
 app.use('/api/feedbacks', feedbackRoutes);
-app.use("/api/student", studentrouter); // Ensure this is correct
-app.use("/api", instructorRoutes);
+app.use("/api/student", studentrouter); 
+app.use("/api/instructor", instructorRoutes);
 // app.use('/api', enrollementRoute);
+app.use('/api', courseRoutes);
 
 app.listen(PORT, function () {
     console.log("listening on port 5000!");
