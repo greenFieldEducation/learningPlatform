@@ -4,8 +4,8 @@ import axios from 'axios';
 const DetailsPopUpModal = ({ isOpen, onClose, course, onEnroll, studentId }) => {
   const [enrolling, setEnrolling] = useState(false);
   const [error, setError] = useState(null);
-
-  const enrollStudent = async (courseId, studentId) => {
+   const courseId=course.id
+  const enrollStudent = async ( studentId) => {
     try {
       const response = await axios.post('http://127.0.0.1:5000/api/courseEnroll/enrollment-request', {
         courseId: courseId,
