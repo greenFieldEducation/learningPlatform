@@ -5,6 +5,7 @@ import Sidebar from './SideBar.jsx';
 import CalendarView from './CalendarView .jsx';
 import MyCourses from './MyCourses.jsx';
 import AllCourses from './AllCourses.jsx';
+import DetailsPopUpModal from './DetailsPopUpModal.jsx';
 
 const StudentDashboard = () => {
   const welcomeRef = useRef(null);
@@ -12,8 +13,10 @@ const StudentDashboard = () => {
   const allCoursesRef = useRef(null);
 
   const [courses, setCourses] = useState([]);
+  const [myCourses, setMyCourses] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [selectedCourse, setSelectedCourse] = useState(null);
 
   useEffect(() => {
     const fetchCourses = async () => {
@@ -47,6 +50,10 @@ const StudentDashboard = () => {
     }
   };
 
+  const handleEnroll = (newEnrollment) => {
+    setMyCourses([...myCourses, newEnrollment]);
+  };
+
   return (
     <div className="flex bg-gray-200 min-h-screen">
       <Sidebar scrollToSection={scrollToSection} />
@@ -58,7 +65,7 @@ const StudentDashboard = () => {
         </div>
         <div className="mb-8">
           <h2 className="text-2xl font-bold mb-4">My Courses</h2>
-          <MyCourses />
+          <MyCourses myCourses={myCourses} />
         </div>
         <div ref={allCoursesRef} className="mb-8">
           <h2 className="text-2xl font-bold mb-4">All Courses</h2>
@@ -67,12 +74,20 @@ const StudentDashboard = () => {
           ) : error ? (
             <p>{error}</p>
           ) : (
-            <AllCourses courses={courses} />
+            <AllCourses courses={courses} onCourseSelect={setSelectedCourse} />
           )}
         </div>
         <div ref={calendarRef} className="mt-4">
           <CalendarView />
         </div>
+        {selectedCourse && (
+          <DetailsPopUpModal
+            isOpen={!!selectedCourse}
+            onClose={() => setSelectedCourse(null)}
+            course={selectedCourse}
+            onEnroll={handleEnroll}
+          />
+        )}
       </div>
     </div>
   );

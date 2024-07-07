@@ -17,10 +17,24 @@ const Login = () => {
         email,
         password,
       });
-      const { token ,studentId  } = response.data;
+
+      const { token, studentId, role } = response.data;
+
       localStorage.setItem('token', token);
-      localStorage.setItem('studentId', studentId)
-      navigate('/instructor-dashboard')
+      localStorage.setItem('studentId', studentId);
+
+      switch (role) {
+        case 'student':
+          navigate('/student-dashboard');
+          break;
+        case 'instructor':
+          navigate('/instructor-dashboard');
+          break;
+        default:
+          // Handle unexpected roles or redirect to a default page
+          navigate('/');
+          break;
+      }
     } catch (err) {
       setError('Login failed. Please try again.');
     }

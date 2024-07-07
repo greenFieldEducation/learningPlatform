@@ -43,10 +43,8 @@ class Student extends Model {
       image: {
         type: DataTypes.STRING,
         allowNull: true,
-      }, subscription: {
-        type: DataTypes.JSONB, 
-        allowNull: true,
-    },
+      }
+    
     }, {
       sequelize,
       modelName: 'Student',

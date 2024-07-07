@@ -6,71 +6,71 @@ const { Op } = require('sequelize');
 
 // Function to send notification to instructor
 async function sendNotificationToInstructor(instructorId, courseId) {
-    try {
-        const instructor = await Instructor.findByPk(instructorId);
+  try {
+    const instructor = await Instructor.findByPk(instructorId);
 
-        if (instructor && instructor.subscription) {
-            const subscription = instructor.subscription;
+    if (instructor && instructor.subscription) {
+      const subscription = instructor.subscription;
 
-            const notificationPayload = {
-                title: 'New Enrollment Request',
-                body: `You have a new enrollment request for course ID ${courseId}`,
-            };
+      const notificationPayload = {
+        title: 'New Enrollment Request',
+        body: `You have a new enrollment request for course ID ${courseId}`,
+      };
 
-            await webpush.sendNotification(subscription, JSON.stringify(notificationPayload));
-        }
-    } catch (error) {
-        console.error('Error sending notification to instructor:', error);
-        throw error;
+      await webpush.sendNotification(subscription, JSON.stringify(notificationPayload));
     }
+  } catch (error) {
+    console.error('Error sending notification to instructor:', error);
+    throw error;
+  }
 }
 
 const enrollmentRequestController = {
-    async createEnrollmentRequest(req, res) {
-        const { studentId, courseId } = req.body;
+  async createEnrollmentRequest(req, res) {
+    const { studentId, courseId } = req.body;
 
-        try {
-            const enrollmentRequest = await EnrollmentRequest.create({
-                studentId,
-                courseId,
-                status: 'pending',
-            });
+    try {
+      const enrollmentRequest = await EnrollmentRequest.create({
+        studentId,
+        courseId,
+        status: 'pending',
+      });
 
-            const course = await Course.findByPk(courseId);
+      const course = await Course.findByPk(courseId);
 
-            if (course) {
-                const instructorId = course.instructorId;
+      if (course) {
+        const instructorId = course.instructorId;
 
-                await sendNotificationToInstructor(instructorId, courseId);
+        await sendNotificationToInstructor(instructorId, courseId);
 
-                await Course.update({ state: 'pending' }, { where: { id: courseId } });
+        return res.status(201).json(enrollmentRequest);
+      } else {
+        throw new Error('Course not found');
+      }
+    } catch (error) {
+      console.error('Error creating enrollment request:', error);
+      return res.status(500).json({ error: 'Internal server error' });
+    }
+  },
 
-                return res.status(201).json(enrollmentRequest);
-            } else {
-                throw new Error('Course not found');
-            }
-        } catch (error) {
-            console.error('Error creating enrollment request:', error);
-            return res.status(500).json({ error: 'Internal server error' });
-        }
-    },
+  async acceptEnrollmentRequest(req, res) {
+    const { enrollmentRequestId } = req.params;
 
-    async acceptEnrollmentRequest(req, res) {
-        const { enrollmentRequestId, courseId } = req.params;
+    try {
+      const enrollmentRequest = await EnrollmentRequest.findByPk(enrollmentRequestId);
 
-        try {
-            await EnrollmentRequest.update({ status: 'accepted' }, {
-                where: { id: enrollmentRequestId, courseId }
-            });
+      if (!enrollmentRequest) {
+        return res.status(404).json({ error: 'Enrollment request not found' });
+      }
 
-            await Course.update({ state: 'accepted' }, { where: { id: courseId } });
+      await enrollmentRequest.update({ status: 'accepted' });
 
-            return res.status(200).json({ message: 'Enrollment request accepted successfully' });
-        } catch (error) {
-            console.error('Error accepting enrollment request:', error);
-            return res.status(500).json({ error: 'Internal server error' });
-        }
-    },
+      return res.status(200).json({ message: 'Enrollment request accepted successfully' });
+    } catch (error) {
+      console.error('Error accepting enrollment request:', error);
+      return res.status(500).json({ error: 'Internal server error' });
+    }
+  },
 };
 
 module.exports = enrollmentRequestController;

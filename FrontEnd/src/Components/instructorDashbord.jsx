@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { FaHome, FaPlus, FaEdit, FaSignOutAlt, FaBell } from 'react-icons/fa';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 
 const InstructorDashboard = ({ instructorName, instructorEmail, instructorImage }) => {
@@ -12,7 +12,6 @@ const InstructorDashboard = ({ instructorName, instructorEmail, instructorImage 
     useEffect(() => {
         generateMotivationalPhrase();
         fetchCourses();
-        // Dummy data initialization for enrolled students
         const dummyEnrolledStudents = [
             { id: 1, name: 'Samir', email: 'samir@gmail.com', course: 'Mathematics 101', imageUrl: 'https://res.cloudinary.com/ali22/image/upload/v1711484433/koss/gkb80z68jhyqlbgusyf1.jpg' },
             { id: 2, name: 'Samir', email: 'samir@gmail.com', course: 'Economics for Beginners', imageUrl: 'https://res.cloudinary.com/ali22/image/upload/v1711484433/koss/gkb80z68jhyqlbgusyf1.jpg' },
@@ -90,6 +89,12 @@ const InstructorDashboard = ({ instructorName, instructorEmail, instructorImage 
                                     <h3 className="text-lg font-semibold text-blue-700 mb-2">{course.title}</h3>
                                     <p className="text-gray-700">{course.description}</p>
                                     <p className="text-gray-500">{course.category}</p>
+                                    <Link
+                                        to={`/instructor-course-detail/${course.id}`}
+                                        className="mt-2 inline-block text-blue-500 hover:underline"
+                                    >
+                                        View Detail
+                                    </Link>
                                 </div>
                             </div>
                         ))}
