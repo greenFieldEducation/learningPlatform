@@ -12,16 +12,7 @@ import StudentProfile from './Components/studentDashboard/StudentProfile.jsx';
 
 
 
-  // useEffect(() => {
-  //     subscribeUser();
-  // }, []);
-
-
-
-
-
-
-
+ 
 const App = () => (
   
   <Router>

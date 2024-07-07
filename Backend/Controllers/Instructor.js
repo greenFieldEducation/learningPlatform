@@ -24,7 +24,7 @@ const getAllInstructors = async (req, res) => {
 
 const updateInstructorProfile = async (req, res) => {
     const { id } = req.params;
-    const updateData = req.body;
+    const { username, email, password, gender, phone, image } = req.body;
 
     try {
         const instructor = await Instructor.findByPk(id);
@@ -32,37 +32,39 @@ const updateInstructorProfile = async (req, res) => {
             return res.status(404).json({ message: 'Instructor not found' });
         }
 
-        await instructor.update(updateData);
-        res.status(200).json({ message: 'Profile updated successfully', instructor });
+        instructor.username = username;
+        instructor.email = email;
+        instructor.password = password;
+        instructor.gender = gender;
+        instructor.phone = phone;
+        instructor.image = image;
+
+        await instructor.save();
+        res.status(200).json(instructor);
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
 };
-
 const uploadProfileImage = async (req, res) => {
     const { id } = req.params;
-
     try {
+        const filePath = req.file.path;
+        const result = await cloudinary.uploader.upload(filePath);
         const instructor = await Instructor.findByPk(id);
         if (!instructor) {
             return res.status(404).json({ message: 'Instructor not found' });
         }
 
-        if (req.file) {
-            const result = await cloudinary.uploader.upload(req.file.path);
-            instructor.image = result.secure_url;
-            await instructor.save();
-            res.status(200).json({ message: 'Profile image uploaded successfully', instructor });
-        } else {
-            res.status(400).json({ message: 'No image file uploaded' });
-        }
+        instructor.image = result.secure_url;
+        await instructor.save();
+
+        res.status(200).json({ secure_url: result.secure_url });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
 };
 
-
- const deleteCourse= async (req,res)=>{
+const deleteCourse = async (req, res) => {
     const { instructorId, courseId } = req.params;
     try {
         const course = await Course.findOne({
@@ -80,7 +82,8 @@ const uploadProfileImage = async (req, res) => {
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
-}
+};
+
 
 
 const UpdateCourse = async (req, res) => {
@@ -105,6 +108,19 @@ const UpdateCourse = async (req, res) => {
     }
 };
 
+const getInstructorById = async (req, res) => {
+    const { id } = req.params;
+    try {
+        const instructor = await Instructor.findByPk(id);
+        if (!instructor) {
+            return res.status(404).json({ message: 'Instructor not found' });
+        }
+        res.status(200).json(instructor);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
 
 
 
@@ -114,5 +130,6 @@ module.exports = {
     updateInstructorProfile,
     uploadProfileImage ,
     deleteCourse,
-    UpdateCourse
+    UpdateCourse,
+    getInstructorById 
 };
