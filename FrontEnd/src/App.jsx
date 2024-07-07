@@ -8,6 +8,20 @@ import InstructorDashboard from './Components/instructorDashbord.jsx';
 import UpdateInstructorProfile from './Components/UpdateInstructorProfile.jsx';
 import AddCourse from './Components/AddCourse.jsx'; 
 import InstructorCourseDetail from './Components/InstructorCourseDetail.jsx';
+import StudentProfile from './Components/studentDashboard/StudentProfile.jsx';
+
+
+
+  // useEffect(() => {
+  //     subscribeUser();
+  // }, []);
+
+
+
+
+
+
+
 const App = () => (
   
   <Router>
@@ -20,6 +34,7 @@ const App = () => (
       <Route path="/update-profile" element={<UpdateInstructorProfile  />} />
       <Route path="/add-course" element={<AddCourse />} /> 
       <Route path="/instructor-course-detail/:id" element={<InstructorCourseDetail />} />
+      <Route path="/student-dashboard/profile" element={<StudentProfile/>} />
     </Routes>
   </Router>
 );

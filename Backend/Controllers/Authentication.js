@@ -93,8 +93,9 @@ exports.register = async (req, res) => {
                 password: hashedPassword,
                 role,
                 phone,
-                gender,
-            });
+                gender
+                
+            })
         }
 
         console.log('User registered successfully:', newUser); // Log successful registration
@@ -140,6 +141,7 @@ exports.login = [
                     id: user.id,
                     role: user.role,
                 },
+                studentId: user.id,
             }
 
             jwt.sign(payload, SECRET_KEY, { expiresIn: "1h" }, (err, token) => {
