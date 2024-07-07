@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { FaHome, FaPlus, FaEdit, FaSignOutAlt, FaBell } from 'react-icons/fa';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
+import axios from 'axios';
 
 const InstructorDashboard = ({ instructorName, instructorEmail, instructorImage }) => {
     const [motivationalPhrase, setMotivationalPhrase] = useState('');
@@ -81,12 +82,13 @@ const InstructorDashboard = ({ instructorName, instructorEmail, instructorImage 
                                     <h3 className="text-lg font-semibold text-blue-700 mb-2">{course.title}</h3>
                                     <p className="text-gray-700">{course.description}</p>
                                     <p className="text-gray-500">{course.category}</p>
-                                    <a
-                                        href={`/instructor-course-detail/${course.id}`}
-                                        className="mt-2 inline-block text-blue-500 hover:underline"
-                                    >
+                                    <Link
+                                        to={`/instructor-course-detail/${course.id}`}
+                                        className="mt-2 inline-block text-blue-500 hover:underline">
+                                    
                                         View Detail
-                                    </a>
+                                    </Link>
+
                                 </div>
                             </div>
                         ))}

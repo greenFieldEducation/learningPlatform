@@ -1,5 +1,4 @@
 import React from 'react';
-import StudentProfileCard from './StudentProfileCard.jsx'; // Assuming the path to StudentProfileCard
 
 const WelcomeSection = () => {
   // Generate a motivational message

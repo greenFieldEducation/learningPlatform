@@ -5,7 +5,8 @@ import DeletePopUp from './PopUps/DeleteConfirmation';
 
 const InstructorCourseDetail = () => {
     const { id: courseId } = useParams();
-    const { id:instructorId } = useParams(); 
+    const { id:instructorId } = useParams();
+
     const [course, setCourse] = useState(null);
     const [editing, setEditing] = useState(false);
     const [updatedCourse, setUpdatedCourse] = useState({
@@ -19,16 +20,21 @@ const InstructorCourseDetail = () => {
     useEffect(() => {
         const fetchCourseDetail = async () => {
             try {
+
                 const response = await axios.get(`http://localhost:5000/api/course/${courseId}`);
                 setCourse(response.data);
                 setUpdatedCourse(response.data); 
             } catch (error) {
                 console.error('Failed to fetch course', error);
+
+
             }
         };
 
         fetchCourseDetail();
-    }, [instructorId, courseId]); // Include instructorId and courseId in dependency array
+    }, [instructorId, courseId]); 
+
+    
 
     const handleUpdate = async (e) => {
         e.preventDefault();
@@ -37,22 +43,31 @@ const InstructorCourseDetail = () => {
             console.log(response.data);
             alert('Course updated successfully');
         } catch (error) {
+
             console.error('Failed to update course', error);
+
             alert('Failed to update course.');
         }
     };
 
-    const handleDelete = async () => {
+
+    const handleDelete = () => {
+        setShowDelete(true);
+    };
+
+    const confirmDelete = async () => {
         try {
-            console.log(`Deleting course with instructorId: ${instructorId} and courseId: ${courseId}`);
+
             const response = await axios.delete(`http://localhost:5000/api/instructors/${instructorId}/courses/${courseId}`);
             console.log(response.data);
             alert('Course deleted successfully');
             // Optionally, redirect the user or perform any other action after deletion
         } catch (error) {
-            console.error('Failed to delete course', error);
+         
+            console.error('cannot delete', error);
             alert('Failed to delete course.');
         }
+        setShowDelete(false);
     };
 
     const handleChange = (e) => {
@@ -64,7 +79,7 @@ const InstructorCourseDetail = () => {
     };
 
     const handleEdit = () => {
-        setUpdatedCourse(course); // Populate updatedCourse with current course data
+        setUpdatedCourse(course);
         setEditing(true);
     };
 
@@ -76,7 +91,7 @@ const InstructorCourseDetail = () => {
         backgroundImage: `url('https://wallpapercave.com/wp/wp9794604.jpg')`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
-        minHeight: '100vh',
+        minHeight: '100vh', 
     };
 
     return (
@@ -189,7 +204,8 @@ const InstructorCourseDetail = () => {
                                 </button>
                                 <button
                                     className="bg-red-500 text-white px-6 py-2 ml-4 rounded-lg hover:bg-red-600 transition duration-300 transform hover:scale-105"
-                                    onClick={() => setShowDelete(true)}
+                                    onClick={handleDelete}
+
                                 >
                                     Delete Course
                                 </button>
@@ -201,7 +217,7 @@ const InstructorCourseDetail = () => {
             <DeletePopUp
                 isOpen={showDelete}
                 onClose={() => setShowDelete(false)}
-                onConfirm={handleDelete}
+                onConfirm={confirmDelete}
                 title="Delete Course"
                 message="Are you sure you want to delete this course?"
             />
