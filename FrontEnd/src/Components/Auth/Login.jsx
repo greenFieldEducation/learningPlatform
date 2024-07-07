@@ -3,7 +3,7 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import Navbar from '../LandingPage/Navbar.jsx';
 import axios from 'axios';
 
-const Login = () => {
+const Login = ({setId}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -17,23 +17,18 @@ const Login = () => {
         email,
         password,
       });
-
-      const { token, studentId, role } = response.data;
-
+      console.log (response.data)
+      
+      const { token, role ,id} = response.data;
       localStorage.setItem('token', token);
-      localStorage.setItem('studentId', studentId);
+       setId(id)
+      if (role === 'instructor') {
+        navigate('/instructor-dashboard');
+      } else if (role === 'student') {
+        navigate('/student-dashboard');
+      } else {
+        setError('Invalid role. Please contact support.');
 
-      switch (role) {
-        case 'student':
-          navigate('/student-dashboard');
-          break;
-        case 'instructor':
-          navigate('/instructor-dashboard');
-          break;
-        default:
-          // Handle unexpected roles or redirect to a default page
-          navigate('/');
-          break;
       }
     } catch (err) {
       setError('Login failed. Please try again.');
@@ -93,7 +88,7 @@ const Login = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
 export default Login;

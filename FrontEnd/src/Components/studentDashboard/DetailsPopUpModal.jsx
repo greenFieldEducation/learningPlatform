@@ -1,27 +1,31 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-const DetailsPopUpModal = ({ isOpen, onClose, course, onEnroll, studentId }) => {
+const DetailsPopUpModal = ({ isOpen, onClose, course, onEnroll, id }) => {
   const [enrolling, setEnrolling] = useState(false);
   const [error, setError] = useState(null);
-   const courseId=course.id
-  const enrollStudent = async ( studentId) => {
+console.log(id )
+  const enrollStudent = async () => {
     try {
-      const response = await axios.post('http://127.0.0.1:5000/api/courseEnroll/enrollment-request', {
-        courseId: courseId,
-        studentId: studentId,
+      setEnrolling(true); 
+      const response = await axios.post('http://localhost:5000/api/enrollment/enrollment-request/create', {
+        studentId: id, 
+        courseId: course.id, 
       });
-  
-      if (response.status === 200) {
+
+      if (response.status === 201) {
         console.log('Enrollment successful:', response.data);
-        return response.data; // Assuming backend returns some data on success
+        onEnroll(response.data); 
+        onClose(); 
       } else {
         console.error('Failed to enroll:', response.statusText);
-        throw new Error('Failed to enroll. Please try again later.');
+        setError('Failed to enroll. Please try again later.');
       }
     } catch (error) {
       console.error('Failed to enroll:', error);
-      throw new Error('Failed to enroll. Please try again later.');
+      setError('Failed to enroll. Please try again later.');
+    } finally {
+      setEnrolling(false); 
     }
   };
 
@@ -36,11 +40,12 @@ const DetailsPopUpModal = ({ isOpen, onClose, course, onEnroll, studentId }) => 
           <button
             className="px-4 py-2 mr-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 focus:outline-none focus:bg-gray-700 transition duration-200"
             onClick={onClose}
+            disabled={enrolling}
           >
             Close
           </button>
           <button
-            className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:bg-blue-700 transition duration-200"
+            className={`px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:bg-blue-700 transition duration-200 ${enrolling && 'opacity-50 cursor-not-allowed'}`}
             onClick={enrollStudent}
             disabled={enrolling}
           >

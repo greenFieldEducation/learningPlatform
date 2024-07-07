@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Link as ScrollLink } from 'react-scroll';
 import { Link } from 'react-router-dom';
@@ -28,11 +27,14 @@ const Navbar = ({ setSearch, setCategory }) => {
           <input
             type="text"
             defaultValue={srch}
-            onChange={e => setsearch(e.target.value)}
+            onChange={(e) => setsearch(e.target.value)}
             placeholder="Search..."
             className="px-3 py-2 border rounded-md focus:outline-none"
           />
-          <button className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md" onClick={handleSearch}>
+          <button
+            className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md"
+            onClick={handleSearch}
+          >
             <svg
               className="h-5 w-5 text-white"
               fill="none"
@@ -50,6 +52,7 @@ const Navbar = ({ setSearch, setCategory }) => {
           </button>
         </div>
       </div>
+
       <div className="flex items-center space-x-8">
         <ScrollLink
           to="home"
@@ -214,4 +217,3 @@ const Navbar = ({ setSearch, setCategory }) => {
 };
 
 export default Navbar;
-

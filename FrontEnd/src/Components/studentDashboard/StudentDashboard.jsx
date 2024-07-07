@@ -7,7 +7,7 @@ import MyCourses from './MyCourses.jsx';
 import AllCourses from './AllCourses.jsx';
 import DetailsPopUpModal from './DetailsPopUpModal.jsx';
 
-const StudentDashboard = () => {
+const StudentDashboard = ({id}) => {
   const welcomeRef = useRef(null);
   const calendarRef = useRef(null);
   const allCoursesRef = useRef(null);
@@ -81,7 +81,8 @@ const StudentDashboard = () => {
           <CalendarView />
         </div>
         {selectedCourse && (
-          <DetailsPopUpModal
+          <DetailsPopUpModal 
+            id ={id}
             isOpen={!!selectedCourse}
             onClose={() => setSelectedCourse(null)}
             course={selectedCourse}
