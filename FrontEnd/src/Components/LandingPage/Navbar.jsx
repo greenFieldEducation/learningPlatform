@@ -2,10 +2,11 @@ import React from 'react';
 import { Link as ScrollLink } from 'react-scroll';
 import { Link } from 'react-router-dom';
 
+
 const Navbar = () => (
   <nav className="bg-blue-600 p-4 flex items-center justify-between">
     <div className="flex items-center space-x-8">
-      <div className="text-white text-2xl font-bold">Learniverse</div>
+      <img src="https://r2.erweima.ai/i/jRTXCGIYQUyj6vG6vuj6xA.jpg" alt="Learniverse Logo" className="h-20" />
       <div className="flex items-center space-x-4">
         <input
           type="text"
@@ -51,7 +52,6 @@ const Navbar = () => (
       >
         Courses
       </ScrollLink>
-      
       <ScrollLink
         to="instructors"
         spy={true}

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHome, faStar, faBook, faCog, faCalendar } from '@fortawesome/free-solid-svg-icons'; // Import icons
-import Logo from '../../assets/logo.png';
+// import Logo from '../../assets/logo.png';
 
 const Sidebar = ({ scrollToSection }) => {
   const location = useLocation();

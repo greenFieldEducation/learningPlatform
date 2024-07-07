@@ -17,9 +17,16 @@ const Login = () => {
         email,
         password,
       });
-      const { token } = response.data;
+      const { token, role } = response.data;
       localStorage.setItem('token', token);
-      navigate('/instructor-dashboard')
+
+      if (role === 'instructor') {
+        navigate('/instructor-dashboard');
+      } else if (role === 'student') {
+        navigate('/student-dashboard');
+      } else {
+        setError('Invalid role. Please contact support.');
+      }
     } catch (err) {
       setError('Login failed. Please try again.');
     }
