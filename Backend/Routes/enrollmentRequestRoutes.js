@@ -1,11 +1,12 @@
+// Routes/enrollmentRequestRoutes.js
 const express = require('express');
 const router = express.Router();
-const enrollmentRequestController = require('../Controllers/enrollmentRequestController.js');
+const { createEnrollmentRequest, acceptEnrollmentRequest } = require('../Controllers/enrollmentRequestController.js');
 
 // Route to create enrollment request
-router.post('/enrollment-request', enrollmentRequestController.createEnrollmentRequest);
+router.post('/enrollment-request/create', createEnrollmentRequest);
 
 // Route to accept enrollment request
-router.put('/enrollment-request/:enrollmentRequestId/:courseId/accept', enrollmentRequestController.acceptEnrollmentRequest);
+router.put('/enrollment-request/:enrollmentRequestId/accept', acceptEnrollmentRequest);
 
 module.exports = router;

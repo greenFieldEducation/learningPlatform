@@ -1,25 +1,6 @@
-
 import React, { useState } from 'react';
 import { Link as ScrollLink } from 'react-scroll';
-import { Link } from 'react-router-dom'
-
-const Navbar = () => (
-  <nav className="bg-blue-600 p-4 flex items-center justify-between">
-    <div className="flex items-center space-x-8">
-      <img src="https://r2.erweima.ai/i/jRTXCGIYQUyj6vG6vuj6xA.jpg" alt="Learniverse Logo" className="h-20" />
-      <div className="flex items-center space-x-4">
-        <input
-          type="text"
-          placeholder="Search..."
-          className="px-3 py-2 border rounded-md focus:outline-none"
-        />
-        <button className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md">
-          <svg
-            className="h-5 w-5 text-white"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
+import { Link } from 'react-router-dom';
 
 const Navbar = ({ setSearch, setCategory }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -46,11 +27,14 @@ const Navbar = ({ setSearch, setCategory }) => {
           <input
             type="text"
             defaultValue={srch}
-            onChange={e => setsearch(e.target.value)}
+            onChange={(e) => setsearch(e.target.value)}
             placeholder="Search..."
             className="px-3 py-2 border rounded-md focus:outline-none"
           />
-          <button className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md" onClick={handleSearch}>
+          <button
+            className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md"
+            onClick={handleSearch}
+          >
             <svg
               className="h-5 w-5 text-white"
               fill="none"
@@ -68,6 +52,7 @@ const Navbar = ({ setSearch, setCategory }) => {
           </button>
         </div>
       </div>
+
       <div className="flex items-center space-x-8">
         <ScrollLink
           to="home"
@@ -109,7 +94,6 @@ const Navbar = ({ setSearch, setCategory }) => {
           <div
             id="dropdown"
             className={`absolute ${dropdownOpen ? 'block' : 'hidden'} z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700`}
-
           >
             <ul className="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
               <li>
@@ -228,68 +212,8 @@ const Navbar = ({ setSearch, setCategory }) => {
         <Link to="/login" className="text-white hover:text-gray-300 text-lg">Login</Link>
         <Link to="/signup" className="text-white hover:text-gray-300 text-lg">Signup</Link>
       </div>
-
-    </div>
-    <div className="flex items-center space-x-8">
-      <ScrollLink
-        to="home"
-        spy={true}
-        smooth={true}
-        offset={-70}
-        duration={500}
-        className="text-white hover:text-gray-300 text-lg cursor-pointer"
-      >
-        Home
-      </ScrollLink>
-      <ScrollLink
-        to="courses"
-        spy={true}
-        smooth={true}
-        offset={-70}
-        duration={500}
-        className="text-white hover:text-gray-300 text-lg cursor-pointer"
-      >
-        Courses
-      </ScrollLink>
-      <ScrollLink
-        to="instructors"
-        spy={true}
-        smooth={true}
-        offset={-70}
-        duration={500}
-        className="text-white hover:text-gray-300 text-lg cursor-pointer"
-      >
-        Instructors
-      </ScrollLink>
-      <ScrollLink
-        to="feedback"
-        spy={true}
-        smooth={true}
-        offset={-70}
-        duration={500}
-        className="text-white hover:text-gray-300 text-lg cursor-pointer"
-      >
-        Feedback
-      </ScrollLink>
-      <ScrollLink
-        to="user-feedbacks"
-        spy={true}
-        smooth={true}
-        offset={-70}
-        duration={500}
-        className="text-white hover:text-gray-300 text-lg cursor-pointer"
-      >
-        User Feedback
-      </ScrollLink>
-      <Link to="/login" className="text-white hover:text-gray-300 text-lg">Login</Link>
-      <Link to="/signup" className="text-white hover:text-gray-300 text-lg">Signup</Link>
-    </div>
-  </nav>
-);
     </nav>
   );
 };
 
-
 export default Navbar;
-

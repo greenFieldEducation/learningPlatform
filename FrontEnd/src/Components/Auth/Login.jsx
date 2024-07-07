@@ -3,7 +3,7 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import Navbar from '../LandingPage/Navbar.jsx';
 import axios from 'axios';
 
-const Login = () => {
+const Login = ({setId}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -17,10 +17,11 @@ const Login = () => {
         email,
         password,
       });
-
-      const { token, role } = response.data;
+      console.log (response.data)
+      
+      const { token, role ,id} = response.data;
       localStorage.setItem('token', token);
-
+       setId(id)
       if (role === 'instructor') {
         navigate('/instructor-dashboard');
       } else if (role === 'student') {
@@ -87,7 +88,7 @@ const Login = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
 export default Login;
