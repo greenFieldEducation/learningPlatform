@@ -17,6 +17,7 @@ const Login = () => {
         email,
         password,
       });
+
       const { token, role } = response.data;
       localStorage.setItem('token', token);
 
@@ -26,6 +27,7 @@ const Login = () => {
         navigate('/student-dashboard');
       } else {
         setError('Invalid role. Please contact support.');
+
       }
     } catch (err) {
       setError('Login failed. Please try again.');

@@ -1,4 +1,5 @@
 const Instructor = require('../DataBase/Models/Instructor');
+const Course = require('../DataBase/Models/Courses');
 const {cloudinary} = require('../Cloudinary/Cloudinary.js');
 
 const createInstructor = async (req, res) => {
@@ -49,7 +50,6 @@ const uploadProfileImage = async (req, res) => {
 
         if (req.file) {
             const result = await cloudinary.uploader.upload(req.file.path);
-            console.log(req.file)
             instructor.image = result.secure_url;
             await instructor.save();
             res.status(200).json({ message: 'Profile image uploaded successfully', instructor });
@@ -61,9 +61,58 @@ const uploadProfileImage = async (req, res) => {
     }
 };
 
+
+ const deleteCourse= async (req,res)=>{
+    const { instructorId, courseId } = req.params;
+    try {
+        const course = await Course.findOne({
+            where: {
+                id: courseId,
+                instructorId: instructorId
+            }
+        });
+        if (!course) {
+            return res.status(404).json({ message: 'Course not found ' });
+        }
+
+        await course.destroy();
+        res.status(200).json({ message: 'Course deleted successfully' });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
+
+
+const UpdateCourse = async (req, res) => {
+    const { instructorId, courseId } = req.params;
+    const updateData = req.body;
+
+    try {
+        const course = await Course.findOne({
+            where: {
+                id: courseId,
+                instructorId: instructorId
+            }
+        });
+        if (!course) {
+            return res.status(404).json({ message: 'Course not found' });
+        }
+
+        await course.update(updateData);
+        res.status(200).json({ message: 'Course updated successfully', course });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+
+
+
 module.exports = {
     createInstructor,
     getAllInstructors,
     updateInstructorProfile,
-    uploadProfileImage 
+    uploadProfileImage ,
+    deleteCourse,
+    UpdateCourse
 };
