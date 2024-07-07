@@ -111,48 +111,49 @@ exports.login = [
     check('password', 'Password is required').exists(),
 
     async (req, res) => {
-        const errors = validationResult(req)
+        const errors = validationResult(req);
         if (!errors.isEmpty()) {
-            return res.status(400).json({ errors: errors.array() })
+            return res.status(400).json({ errors: errors.array() });
         }
 
-        const { email, password } = req.body
+        const { email, password } = req.body;
 
         try {
-            let user
-            const student = await Student.findOne({ where: { email } })
-            const instructor = await Instructor.findOne({ where: { email } })
+            let user;
+            const student = await Student.findOne({ where: { email } });
+            const instructor = await Instructor.findOne({ where: { email } });
 
             if (student) {
-                user = student
+                user = student;
             } else if (instructor) {
-                user = instructor
+                user = instructor;
             } else {
-                return res.status(400).json({ msg: "Incorrect Email" })
+                return res.status(400).json({ msg: "Incorrect Email" });
             }
 
-            const isMatch = await bcrypt.compare(password, user.password)
+            const isMatch = await bcrypt.compare(password, user.password);
             if (!isMatch) {
-                return res.status(400).json({ msg: "Incorrect password" })
+                return res.status(400).json({ msg: "Incorrect password" });
             }
 
             const payload = {
                 user: {
                     id: user.id,
                     role: user.role,
-                },
-                studentId: user.id,
+                }
+               
             }
 
+
             jwt.sign(payload, SECRET_KEY, { expiresIn: "1h" }, (err, token) => {
-                if (err) throw err
-                res.json({ token })
-            })
+                if (err) throw err;
+                res.json({ token, role: user.role });
+            });
         } catch (err) {
-            console.error(err.message)
-            res.status(500).send("Server error")
+            console.error(err.message);
+            res.status(500).send("Server error");
         }
     }
-]
+];
 exports.verifyToken = verifyToken;
 exports.validateRegister = validateRegister

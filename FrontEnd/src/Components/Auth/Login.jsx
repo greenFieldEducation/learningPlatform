@@ -18,22 +18,16 @@ const Login = () => {
         password,
       });
 
-      const { token, studentId, role } = response.data;
-
+      const { token, role } = response.data;
       localStorage.setItem('token', token);
-      localStorage.setItem('studentId', studentId);
 
-      switch (role) {
-        case 'student':
-          navigate('/student-dashboard');
-          break;
-        case 'instructor':
-          navigate('/instructor-dashboard');
-          break;
-        default:
-          // Handle unexpected roles or redirect to a default page
-          navigate('/');
-          break;
+      if (role === 'instructor') {
+        navigate('/instructor-dashboard');
+      } else if (role === 'student') {
+        navigate('/student-dashboard');
+      } else {
+        setError('Invalid role. Please contact support.');
+
       }
     } catch (err) {
       setError('Login failed. Please try again.');
