@@ -13,11 +13,15 @@ const feedbackRoutes = require('../Routes/Feedback.js')
 const subscriptionRoutes = require('../Routes/subscriptionRoutes.js');
 const enrollmentRequestRoutes = require('../Routes/enrollmentRequestRoutes.js');
 const course = require ('../Routes/Courses.js')
-
+const path = require('path');
 
 app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
+
+
+// Route to serve service worker
+
 
 app.use('/api/authentication', authenticationRoutes)
 app.use('/api/feedbacks', feedbackRoutes)

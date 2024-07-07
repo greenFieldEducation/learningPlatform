@@ -17,8 +17,9 @@ const Login = () => {
         email,
         password,
       });
-      const { token } = response.data;
+      const { token ,studentId  } = response.data;
       localStorage.setItem('token', token);
+      localStorage.setItem('studentId', studentId)
       navigate('/instructor-dashboard')
     } catch (err) {
       setError('Login failed. Please try again.');

@@ -141,6 +141,7 @@ exports.login = [
                     id: user.id,
                     role: user.role,
                 },
+                studentId: user.id,
             }
 
             jwt.sign(payload, SECRET_KEY, { expiresIn: "1h" }, (err, token) => {

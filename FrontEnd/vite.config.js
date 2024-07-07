@@ -1,24 +1,9 @@
-// import { defineConfig } from 'vite'
-// import react from '@vitejs/plugin-react'
-
-// // https://vitejs.dev/config/
-// export default defineConfig({
-//   plugins: [react()],
-// })
-
 import { defineConfig } from 'vite';
-import { VitePWA } from 'vite-plugin-pwa';
+import react from '@vitejs/plugin-react';
 
 export default defineConfig({
-  plugins: [
-    VitePWA({
-      registerType: 'autoUpdate',
-      injectRegister: 'inline',
-      includeAssets: ['favicon.ico', 'robots.txt', 'service-worker.js'],
-      workbox: {
-        // Workbox options
-      },
-    }),
-  ],
+  plugins: [react()],
+  server: {
+    port: 5173, 
+  },
 });
-
