@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { FaHome, FaPlus, FaEdit, FaSignOutAlt, FaBell } from 'react-icons/fa';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
@@ -52,7 +53,6 @@ const InstructorDashboard = ({ instructorName, instructorEmail, instructorImage 
 
     return (
         <div className="flex min-h-screen bg-gray-100">
-            {/* Sidebar */}
             <div className="flex flex-col items-center w-16 bg-blue-700 text-white p-6">
                 <FaHome className="my-4 text-2xl cursor-pointer hover:text-blue-300" />
                 <FaPlus className="my-4 text-2xl cursor-pointer hover:text-blue-300" onClick={() => navigate('/add-course')} />
@@ -60,10 +60,7 @@ const InstructorDashboard = ({ instructorName, instructorEmail, instructorImage 
                 <FaBell className="my-4 text-2xl cursor-pointer hover:text-blue-300" /> {/* Notification icon */}
                 <FaSignOutAlt className="my-4 text-2xl cursor-pointer hover:text-blue-300" onClick={handleLogout} />
             </div>
-
-            {/* Main Content */}
             <div className="flex-1 p-10 flex flex-col items-end">
-                {/* Instructor Profile Info */}
                 <div className="bg-white p-6 rounded-lg shadow-md max-w-xs mb-6 self-start">
                     <div className="w-24 h-24 overflow-hidden rounded-full border-2 border-blue-500">
                         <img src={instructorImage} className="w-full h-full object-cover" alt="Instructor" />
@@ -73,13 +70,9 @@ const InstructorDashboard = ({ instructorName, instructorEmail, instructorImage 
                         <p className="text-gray-600">{instructorEmail}</p>
                     </div>
                 </div>
-
-                {/* Motivational Phrase */}
                 <div className="bg-blue-100 text-blue-700 p-6 rounded-lg shadow-md max-w-md self-start mb-6">
                     <p className="text-lg font-semibold">{motivationalPhrase}</p>
                 </div>
-
-                {/* Courses Section */}
                 <div className="mt-10 w-full">
                     <h2 className="text-2xl font-semibold text-blue-700 mb-4">Courses</h2>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -91,17 +84,16 @@ const InstructorDashboard = ({ instructorName, instructorEmail, instructorImage 
                                     <p className="text-gray-500">{course.category}</p>
                                     <Link
                                         to={`/instructor-course-detail/${course.id}`}
-                                        className="mt-2 inline-block text-blue-500 hover:underline"
-                                    >
+                                        className="mt-2 inline-block text-blue-500 hover:underline">
+                                    
                                         View Detail
                                     </Link>
+
                                 </div>
                             </div>
                         ))}
                     </div>
                 </div>
-
-                {/* Enrolled Students Section */}
                 <div className="mt-10 w-full">
                     <h2 className="text-2xl font-semibold text-blue-700 mb-4">Enrolled Students</h2>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">

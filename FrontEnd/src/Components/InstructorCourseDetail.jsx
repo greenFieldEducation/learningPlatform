@@ -3,8 +3,10 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import DeletePopUp from './PopUps/DeleteConfirmation';
 
-const InstructorCourseDetail = ({ instructorId, courseId }) => {
-    const { id } = useParams(); // Assuming you retrieve instructorId from URL params
+const InstructorCourseDetail = () => {
+    const { id: courseId } = useParams();
+    const { id:instructorId } = useParams();
+
     const [course, setCourse] = useState(null);
     const [editing, setEditing] = useState(false);
     const [updatedCourse, setUpdatedCourse] = useState({
@@ -18,16 +20,21 @@ const InstructorCourseDetail = ({ instructorId, courseId }) => {
     useEffect(() => {
         const fetchCourseDetail = async () => {
             try {
-                const response = await axios.get(`http://127.0.0.1:5000/api/course/${id}`);
+
+                const response = await axios.get(`http://localhost:5000/api/course/${courseId}`);
                 setCourse(response.data);
                 setUpdatedCourse(response.data); 
             } catch (error) {
-                console.error('cannot fetch ', error);
+                console.error('Failed to fetch course', error);
+
+
             }
         };
 
         fetchCourseDetail();
-    }, [id]);
+    }, [instructorId, courseId]); 
+
+    
 
     const handleUpdate = async (e) => {
         e.preventDefault();
@@ -36,10 +43,13 @@ const InstructorCourseDetail = ({ instructorId, courseId }) => {
             console.log(response.data);
             alert('Course updated successfully');
         } catch (error) {
-            console.error('cannot update', error);
+
+            console.error('Failed to update course', error);
+
             alert('Failed to update course.');
         }
     };
+
 
     const handleDelete = () => {
         setShowDelete(true);
@@ -47,11 +57,13 @@ const InstructorCourseDetail = ({ instructorId, courseId }) => {
 
     const confirmDelete = async () => {
         try {
+
             const response = await axios.delete(`http://localhost:5000/api/instructors/${instructorId}/courses/${courseId}`);
             console.log(response.data);
             alert('Course deleted successfully');
             // Optionally, redirect the user or perform any other action after deletion
         } catch (error) {
+         
             console.error('cannot delete', error);
             alert('Failed to delete course.');
         }
@@ -193,6 +205,7 @@ const InstructorCourseDetail = ({ instructorId, courseId }) => {
                                 <button
                                     className="bg-red-500 text-white px-6 py-2 ml-4 rounded-lg hover:bg-red-600 transition duration-300 transform hover:scale-105"
                                     onClick={handleDelete}
+
                                 >
                                     Delete Course
                                 </button>
