@@ -147,7 +147,7 @@ exports.login = [
 
             jwt.sign(payload, SECRET_KEY, { expiresIn: "1h" }, (err, token) => {
                 if (err) throw err;
-                res.json({ token, role: user.role });
+                res.json({ token, role: user.role , id :user.id});
             });
         } catch (err) {
             console.error(err.message);

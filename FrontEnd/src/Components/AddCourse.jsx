@@ -19,7 +19,7 @@ const AddCourse = () => {
                 category,
                 content,
                 note,
-                instructorId: 1 // Replace with actual instructorId
+                instructorId: 1 
             });
             console.log('Course added successfully:', response.data);
             navigate('/instructor-dashboard');

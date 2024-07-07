@@ -121,9 +121,6 @@ const getInstructorById = async (req, res) => {
     }
 };
 
-const getCourseById=()=>{
-    
-}
 
 
 
