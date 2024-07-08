@@ -1,131 +1,133 @@
-import React, { useState } from 'react';
-import { FaUser, FaEnvelope, FaImage, FaSave, FaArrowLeft } from 'react-icons/fa';
-import axios from 'axios';
+    import React, { useState } from 'react';
+    import axios from 'axios';
 
-const UpdateInstructorProfile = () => {
-    const [username, setUsername] = useState('');
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [gender, setGender] = useState('');
-    const [phone, setPhone] = useState('');
-    const [image, setImage] = useState('');
-    const [imageUrl, setImageUrl] = useState('');
+    const UpdateInstructorProfile = () => {
+        const instructorId = 1; 
+        const [username, setUsername] = useState('');
+        const [email, setEmail] = useState('');
+        const [password, setPassword] = useState('');
+        const [gender, setGender] = useState('');
+        const [phone, setPhone] = useState('');
+        const [image, setImage] = useState('');
+        const [imagePreview, setImagePreview] = useState('');
 
-    const handleImageUpload = async (e) => {
-        const file = e.target.files[0];
-        const formData = new FormData();
-        formData.append('file', file);
-        formData.append('upload_preset', 'your_upload_preset'); // Replace with your upload preset
+        const handleUpdateProfile = async (e) => {
+            e.preventDefault();
+            const formData = {
+                username,
+                email,
+                password,
+                gender,
+                phone,
+                image,
+            };
 
-        try {
-            const response = await axios.post('https://api.cloudinary.com/v1_1/your_cloud_name/image/upload', formData); // Replace with your Cloudinary cloud name
-            setImageUrl(response.data.secure_url);
-        } catch (error) {
-            console.error('Error uploading image:', error);
-        }
-    };
-
-    const handleSave = async () => {
-        const data = {
-            username,
-            email,
-            password,
-            gender,
-            phone,
-            image: imageUrl,
+            try {
+                await axios.put(`http://127.0.0.1:5000/api/instructor/instructors/${instructorId}`, formData);
+                alert('Profile updated successfully');
+            } catch (error) {
+                console.error('Error updating profile:', error);
+                alert('Failed to update profile');
+            }
         };
-        const token = localStorage.getItem('token');
 
-        try {
-            const response = await axios.put('http://127.0.0.1:5000/api/updateInstructor', data, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            });
+        const handleImageChange = async (e) => {
+            const file = e.target.files[0];
+            setImagePreview(URL.createObjectURL(file));
+            const formData = new FormData();
+            formData.append('file', file);
 
-            console.log(response.data);
-        } catch (error) {
-            console.error('Error updating instructor:', error);
-        }
+            try {
+                const response = await axios.post(`http://127.0.0.1:5000/api/instructor/instructors/${instructorId}/upload`, formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                    },
+                });
+                setImage(response.data.secure_url);
+                console.log(response.data.secure_url)
+            } catch (error) {
+                console.error('Error uploading image:', error);
+                alert('Failed to upload image');
+            }
+        };
+
+        return (
+            <div 
+                className="min-h-screen flex items-center justify-center bg-cover bg-center" 
+                style={{ backgroundImage: "url('https://ccrc.tc.columbia.edu/images/lesson-study-webinar-blog.png')" }}
+            >
+                <div className="bg-white p-8 rounded shadow-md w-full max-w-md transform transition duration-500 hover:scale-105 hover:shadow-lg">
+                    <h2 className="text-2xl font-bold mb-4 text-center">Update Profile</h2>
+                    <form onSubmit={handleUpdateProfile}>
+                        <div className="mb-4">
+                            <label className="block text-gray-700 text-sm font-bold mb-2">Username</label>
+                            <input
+                                type="text"
+                                value={username}
+                                onChange={(e) => setUsername(e.target.value)}
+                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            />
+                        </div>
+                        <div className="mb-4">
+                            <label className="block text-gray-700 text-sm font-bold mb-2">Email</label>
+                            <input
+                                type="email"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            />
+                        </div>
+                        <div className="mb-4">
+                            <label className="block text-gray-700 text-sm font-bold mb-2">Password</label>
+                            <input
+                                type="password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            />
+                        </div>
+                        <div className="mb-4">
+                            <label className="block text-gray-700 text-sm font-bold mb-2">Gender</label>
+                            <select
+                                value={gender}
+                                onChange={(e) => setGender(e.target.value)}
+                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            >
+                                <option value="">Select Gender</option>
+                                <option value="Men">Men</option>
+                                <option value="Women">Women</option>
+                            </select>
+                        </div>
+                        <div className="mb-4">
+                            <label className="block text-gray-700 text-sm font-bold mb-2">Phone</label>
+                            <input
+                                type="text"
+                                value={phone}
+                                onChange={(e) => setPhone(e.target.value)}
+                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            />
+                        </div>
+                        <div className="mb-4">
+                            <label className="block text-gray-700 text-sm font-bold mb-2">Profile Image</label>
+                            <input
+                                type="file"
+                                onChange={handleImageChange}
+                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            />
+                            {imagePreview && <img src={imagePreview} alt="Profile Preview" className="mt-4 w-full h-48 object-cover rounded" />}
+                        </div>
+                        <div className="flex items-center justify-center">
+                            <button
+                                type="submit"
+                                className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
+                            >
+                                Update Profile
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        );
     };
 
-    return (
-        <div className="flex justify-center items-center h-screen bg-gray-100">
-            <div className="bg-white p-8 rounded-lg shadow-lg w-96">
-                <h2 className="text-2xl font-semibold text-center mb-6 text-blue-700">Edit Instructor Profile</h2>
-                <form className="space-y-6">
-                    <div className="flex items-center space-x-3">
-                        <FaUser className="text-gray-500" />
-                        <input
-                            type="text"
-                            value={username}
-                            onChange={(e) => setUsername(e.target.value)}
-                            placeholder="Username"
-                            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
-                        />
-                    </div>
-                    <div className="flex items-center space-x-3">
-                        <FaEnvelope className="text-gray-500" />
-                        <input
-                            type="email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            placeholder="Email"
-                            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
-                        />
-                    </div>
-                    <div className="flex items-center space-x-3">
-                        <FaEnvelope className="text-gray-500" />
-                        <input
-                            type="password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            placeholder="Password"
-                            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
-                        />
-                    </div>
-                    <div className="flex items-center space-x-3">
-                        <FaEnvelope className="text-gray-500" />
-                        <input
-                            type="text"
-                            value={gender}
-                            onChange={(e) => setGender(e.target.value)}
-                            placeholder="Gender"
-                            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
-                        />
-                    </div>
-                    <div className="flex items-center space-x-3">
-                        <FaEnvelope className="text-gray-500" />
-                        <input
-                            type="text"
-                            value={phone}
-                            onChange={(e) => setPhone(e.target.value)}
-                            placeholder="Phone"
-                            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
-                        />
-                    </div>
-                    <div className="flex items-center space-x-3">
-                        <FaImage className="text-gray-500" />
-                        <input
-                            type="file"
-                            onChange={handleImageUpload}
-                            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
-                        />
-                    </div>
-                    <div className="flex justify-center mt-6">
-                        <button
-                            type="button"
-                            onClick={handleSave}
-                            className="bg-blue-500 text-white px-6 py-2 rounded-lg shadow-md hover:bg-blue-600 focus:outline-none"
-                        >
-                            <FaSave className="mr-2" />
-                            Save
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    );
-};
-
-export default UpdateInstructorProfile;
+    export default UpdateInstructorProfile;

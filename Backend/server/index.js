@@ -1,5 +1,4 @@
 
-// Server/index.js
 require('dotenv').config();
 
 const express = require("express")
@@ -26,8 +25,8 @@ app.use('/api/feedbacks', feedbackRoutes)
 app.use("/api/student", studentrouter)
 app.use("/api/instructor", instructorRoutes)
 app.use('/api/notification', subscriptionRoutes);
-app.use('/api/enrollment', enrollmentRequestRoutes); // Changed '/api/roll' to '/api/enrollment'
-app.use('/api/course', course);
+app.use('/api/enrollment', enrollmentRequestRoutes); 
+app.use('/api', course);
 
 app.listen(PORT, function () {
     console.log("listening on port 5000!");

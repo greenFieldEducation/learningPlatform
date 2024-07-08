@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { FaHome, FaPlus, FaEdit, FaSignOutAlt, FaBell } from 'react-icons/fa';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const InstructorDashboard = ({ instructorName, instructorEmail, instructorImage }) => {
     const [motivationalPhrase, setMotivationalPhrase] = useState('');
@@ -50,60 +50,58 @@ const InstructorDashboard = ({ instructorName, instructorEmail, instructorImage 
         navigate('/update-profile');
     };
 
+    const handleViewDetails = (courseId) => {
+        navigate(`/instructor-course-detail/${courseId}`);
+    };
+
     return (
         <div className="flex min-h-screen bg-gray-100">
             <div className="flex flex-col items-center w-16 bg-blue-700 text-white p-6">
                 <FaHome className="my-4 text-2xl cursor-pointer hover:text-blue-300" />
                 <FaPlus className="my-4 text-2xl cursor-pointer hover:text-blue-300" onClick={() => navigate('/add-course')} />
                 <FaEdit className="my-4 text-2xl cursor-pointer hover:text-blue-300" onClick={handleEditProfile} />
-                <FaBell className="my-4 text-2xl cursor-pointer hover:text-blue-300" /> {/* Notification icon */}
+                <FaBell className="my-4 text-2xl cursor-pointer hover:text-blue-300" />
                 <FaSignOutAlt className="my-4 text-2xl cursor-pointer hover:text-blue-300" onClick={handleLogout} />
             </div>
-            <div className="flex-1 p-10 flex flex-col items-end">
-                <div className="bg-white p-6 rounded-lg shadow-md max-w-xs mb-6 self-start">
-                    <div className="w-24 h-24 overflow-hidden rounded-full border-2 border-blue-500">
-                        <img src={instructorImage} className="w-full h-full object-cover" alt="Instructor" />
+            <div className="flex-1 p-6">
+                <div className="mb-6">
+                    <div className="flex items-center">
+                        <img src={instructorImage} alt="Instructor" className="w-16 h-16 rounded-full mr-4" />
+                        <div>
+                            <h1 className="text-2xl font-semibold">{instructorName}</h1>
+                            <p className="text-gray-600">{instructorEmail}</p>
+                        </div>
                     </div>
-                    <div className="mt-4">
-                        <h2 className="text-xl font-semibold text-blue-700">{instructorName}</h2>
-                        <p className="text-gray-600">{instructorEmail}</p>
-                    </div>
+                    <p className="mt-4 text-blue-700 font-semibold">{motivationalPhrase}</p>
                 </div>
-                <div className="bg-blue-100 text-blue-700 p-6 rounded-lg shadow-md max-w-md self-start mb-6">
-                    <p className="text-lg font-semibold">{motivationalPhrase}</p>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {courses.map((course) => (
+                        <div key={course.id} className="bg-white shadow-md rounded p-4">
+                            <h2 className="text-xl font-semibold mb-2">{course.title}</h2>
+                            <p className="text-gray-700 mb-2">{course.description}</p>
+                            <p className="text-gray-500">{course.category}</p>
+                            <button 
+                                className="mt-4 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
+                                onClick={() => handleViewDetails(course.id)}
+                            >
+                                View Details
+                            </button>
+                        </div>
+                    ))}
                 </div>
-                <div className="mt-10 w-full">
-                    <h2 className="text-2xl font-semibold text-blue-700 mb-4">Courses</h2>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                        {courses.map(course => (
-                            <div key={course.id} className="bg-white rounded-lg shadow-md overflow-hidden">
-                                <div className="p-4">
-                                    <h3 className="text-lg font-semibold text-blue-700 mb-2">{course.title}</h3>
-                                    <p className="text-gray-700">{course.description}</p>
-                                    <p className="text-gray-500">{course.category}</p>
-                                    <Link
-                                        to={`/instructor-course-detail/${course.id}`}
-                                        className="mt-2 inline-block text-blue-500 hover:underline">
-                                    
-                                        View Detail
-                                    </Link>
-
+                <div className="mt-6">
+                    <h2 className="text-xl font-semibold mb-4">Enrolled Students</h2>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {enrolledStudents.map((student) => (
+                            <div key={student.id} className="bg-white shadow-md rounded p-4">
+                                <div className="flex items-center">
+                                    <img src={student.imageUrl} alt={student.name} className="w-12 h-12 rounded-full mr-4" />
+                                    <div>
+                                        <h3 className="text-lg font-semibold">{student.name}</h3>
+                                        <p className="text-gray-600">{student.email}</p>
+                                    </div>
                                 </div>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-                <div className="mt-10 w-full">
-                    <h2 className="text-2xl font-semibold text-blue-700 mb-4">Enrolled Students</h2>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                        {enrolledStudents.map(student => (
-                            <div key={student.id} className="bg-white rounded-lg shadow-md overflow-hidden">
-                                <img src={student.imageUrl} alt={student.name} className="w-full h-40 object-cover" />
-                                <div className="p-4">
-                                    <h3 className="text-lg font-semibold text-blue-700 mb-2">{student.name}</h3>
-                                    <p className="text-gray-700">{student.course}</p>
-                                    <p className="text-gray-500">{student.email}</p>
-                                </div>
+                                <p className="text-gray-700 mt-2">{student.course}</p>
                             </div>
                         ))}
                     </div>

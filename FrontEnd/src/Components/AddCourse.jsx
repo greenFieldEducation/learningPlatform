@@ -9,22 +9,23 @@ const AddCourse = () => {
     const [content, setContent] = useState('');
     const [note, setNote] = useState('');
     const navigate = useNavigate();
+    const instructorId = 1; 
 
     const handleAddCourse = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://127.0.0.1:5000/api/createCourse', {
+            const response = await axios.post(`http://127.0.0.1:5000/api/instructor/instructors/${instructorId}/createCourse`, {
                 title,
                 description,
                 category,
                 content,
                 note,
-                instructorId: 1 
+                instructorId
             });
             console.log('Course added successfully:', response.data);
             navigate('/instructor-dashboard');
         } catch (error) {
-            console.error('Error adding course:', error);
+            console.error('Error adding course:', error.response ? error.response.data : error.message);
         }
     };
 
