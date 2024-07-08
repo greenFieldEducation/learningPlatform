@@ -1,8 +1,9 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChartLine, faDna, faGlobe } from '@fortawesome/free-solid-svg-icons'; // Import icons
+import { faChartLine, faDna, faGlobe } from '@fortawesome/free-solid-svg-icons'; 
 
 const MyCourses = ({ myCourses }) => {
+  //console.log(myCourses)
   const getStatusIcon = (status) => {
     switch (status) {
       case 'Accepted':
@@ -12,7 +13,7 @@ const MyCourses = ({ myCourses }) => {
       case 'Rejected':
         return faGlobe;
       default:
-        return null; // Default icon for other statuses
+        return faGlobe; 
     }
   };
 
@@ -30,18 +31,19 @@ const MyCourses = ({ myCourses }) => {
   };
 
   return (
-    <div className='p-4'>
+    <div className="p-4">
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-        {myCourses.map((course) => (
+        {myCourses.map((course) => ( 
+          
           <div key={course.id} className="course-card bg-white rounded-lg shadow-md overflow-hidden border border-gray-200">
-            <div className={`course-card-header flex items-center px-4 py-3 bg-blue-500 text-white`}>
-              <FontAwesomeIcon icon={getStatusIcon(course.status)} className="mr-2" />
-              <h3 className="text-lg font-semibold">{course.courseTitle}</h3>
+            <div className={`course-card-header flex items-center px-4 py-3 ${getStatusColor(course.status)} text-white`}>
+              <FontAwesomeIcon icon={getStatusIcon(course.EnrollmentRequests.status)} className="mr-2" />
+              <h3 className="text-lg font-semibold">{course.title}</h3> {/* Display course title */}
             </div>
             <div className="px-4 py-3">
               <div className="mt-2">
                 <span className={`inline-block px-2 py-1 text-xs font-semibold rounded ${getStatusColor(course.status)} text-white`}>
-                  {course.status}
+                  {course.EnrollmentRequests[0].status}
                 </span>
               </div>
             </div>

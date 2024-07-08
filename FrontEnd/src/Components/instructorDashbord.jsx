@@ -40,6 +40,38 @@ const InstructorDashboard = ({ instructorName, instructorEmail, instructorImage 
         }
     };
 
+    const handleAccept = async (requestId) => {
+        try {
+            await axios.put(`http://localhost:5000/api/enrollment/enrollment-request/${requestId}/accept`);
+            const updatedRequests = enrollmentRequests.map(request => {
+                if (request.id === requestId) {
+                    return { ...request, status: 'accepted' };
+                }
+                return request;
+            });
+            setEnrollmentRequests(updatedRequests);
+        } catch (error) {
+            console.error('Error accepting enrollment request:', error);
+        }
+    };
+
+    const handleReject = async (requestId) => {
+        try {
+            await axios.put(`http://localhost:5000/api/enrollment/enrollment-request/${requestId}/reject`);
+            const updatedRequests = enrollmentRequests.map(request => {
+                if (request.id === requestId) {
+                    return { ...request, status: 'rejected' };
+                }
+                return request;
+            });
+            setEnrollmentRequests(updatedRequests);
+        } catch (error) {
+            console.error('Error rejecting enrollment request:', error);
+        }
+    };
+
+
+
     useEffect(() => {
         fetchCourses();
         fetchEnrolledStudents();
@@ -87,9 +119,13 @@ const InstructorDashboard = ({ instructorName, instructorEmail, instructorImage 
                                         <p className="text-gray-700">{course.description}</p>
                                         <p className="text-gray-500">{course.category}</p>
                                         <button
-                                            onClick={() => setSelectedCourseId(course.id)}
+                                           
                                             className="mt-2 inline-block text-blue-500 hover:underline">
                                             View Detail
+                                        </button>
+                                        <button  onClick={() => setSelectedCourseId(course.id)}
+                                        className="mt-2 inline-block text-blue-500 hover:underline" >
+                                            Rquests
                                         </button>
                                     </div>
                                 </div>
