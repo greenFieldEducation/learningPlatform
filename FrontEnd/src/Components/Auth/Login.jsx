@@ -84,6 +84,14 @@ const Login = ({setId}) => {
                 Go back to home
               </NavLink>
             </div>
+            <div className="mt-6 text-center">
+              <p className="text-sm text-gray-600">
+                you Don't have an account?{' '}
+                <NavLink to="/signup" className="font-medium text-indigo-600 hover:text-indigo-500">
+                  Sign Up
+                </NavLink>
+              </p>
+            </div>
           </form>
         </div>
       </div>

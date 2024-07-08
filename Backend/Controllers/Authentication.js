@@ -7,17 +7,19 @@ const { body, check, validationResult } = require('express-validator')
 const cloudinary = require('../Cloudinary/Cloudinary.js')
 
 const SECRET_KEY = "Learniverse"
-
-const validateRegister = [
-    body('username').isLength({ min: 7 }).withMessage('Username must be longer than 6 charactersb'),
+exports.register  = [
+    body('username').isLength({ min: 7 }).withMessage('Username must be longer than 6 charactersb',console.log(body)),
+    body('email')
+        .isEmail().withMessage('Email must be valid')
+        .matches(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/).withMessage('Email must be a valid email address format'),
     body('password')
         .isLength({ min: 7 }).withMessage('Password must be longer than 6 characters')
         .matches(/[A-Z]/).withMessage('Password must contain at least one uppercase letter b')
         .matches(/[a-z]/).withMessage('Password must contain at least one lowercase letterb')
         .matches(/[0-9]/).withMessage('Password must contain at least one digitb')
-        .matches(/[!@#$%^&*(),.?":{}|<>]/).withMessage('Password must contain at least one special characterb'),
+        .matches(/[!@#$%^&*(),.?":{}|<>]/).withMessage('Password must contain at least one special characterb',console.log(body)),
     body('gender').notEmpty().withMessage('Gender is required'),
-    body('phone').isLength({ min: 8 }).withMessage('Phone number must be longer than 7 digitsb'),
+    body('phone').isLength({ min: 8 }).withMessage('Phone number must be longer than 7 digitsb',console.log(body)),
     body('role').custom((value, { req }) => {
         if (value === 'student' && !req.body.fields) {
             throw new Error('Field is required for students');
@@ -40,9 +42,9 @@ const validateRegister = [
         }
         return true;
     }),
-];
 
-exports.register = async (req, res) => {
+
+ async (req, res) => {
     console.log('Received register request:', req.body); // Log request body
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -56,7 +58,7 @@ exports.register = async (req, res) => {
         let existingUser = await Student.findOne({ where: { username } }) || await Instructor.findOne({ where: { username } });
         if (existingUser) {
             console.log('Username already in use'); // Log existing username case
-            return res.status(400).json({ errors: [{ msg: "Username already in use", param: "username" }] });
+            return res.status(400).json( { username: 'Username already in use' } );
         }
          existingUser = await Student.findOne({ where: { email } }) || await Instructor.findOne({ where: { email } });
         if (existingUser) {
@@ -93,9 +95,8 @@ exports.register = async (req, res) => {
                 password: hashedPassword,
                 role,
                 phone,
-                gender
-                
-            })
+                gender,
+            });
         }
 
         console.log('User registered successfully:', newUser); // Log successful registration
@@ -104,7 +105,7 @@ exports.register = async (req, res) => {
         console.error('Server error:', error); // Log server error
         res.status(500).json({ errors: [{ msg: "Server error", param: "general" }] });
     }
-};
+}]
 
 exports.login = [
     check('email', 'Please include a valid email').isEmail(),
@@ -156,4 +157,3 @@ exports.login = [
     }
 ];
 exports.verifyToken = verifyToken;
-exports.validateRegister = validateRegister
