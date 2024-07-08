@@ -1,5 +1,3 @@
-// In enrollmentRequestController.js
-
 const EnrollmentRequest = require('../DataBase/Models/EnrollmentRequest');
 const Course = require('../DataBase/Models/Courses');
 const Student = require('../DataBase/Models/Students');
@@ -74,7 +72,12 @@ const getEnrollmentRequestsByCourse = async (req, res) => {
         courseId,
         status: 'pending',
       },
-      include: [{ model: Student, attributes: ['id', 'username'] }],
+      include: [
+        {
+          model: Student,
+          attributes: ['id', 'username', 'email', 'image'],
+        },
+      ],
     });
 
     return res.status(200).json(enrollmentRequests);

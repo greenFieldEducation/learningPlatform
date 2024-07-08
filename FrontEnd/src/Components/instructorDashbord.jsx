@@ -100,10 +100,11 @@ const InstructorDashboard = ({ instructorName, instructorEmail, instructorImage 
                         <h2 className="text-2xl font-semibold text-blue-700 mb-4">Enrolled Students</h2>
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                             {enrolledStudents.map(student => (
+                                
                                 <div key={student.id} className="bg-white rounded-lg shadow-md overflow-hidden">
                                     <img src={student.imageUrl} alt={student.name} className="w-full h-40 object-cover" />
                                     <div className="p-4">
-                                        <h3 className="text-lg font-semibold text-blue-700 mb-2">{student.name}</h3>
+                                        <h3 className="text-lg font-semibold text-blue-700 mb-2">{student.username}</h3>
                                         <p className="text-gray-700">{student.course}</p>
                                         <p className="text-gray-500">{student.email}</p>
                                     </div>
@@ -120,24 +121,33 @@ const InstructorDashboard = ({ instructorName, instructorEmail, instructorImage 
                                 <p className="text-red-500">{error}</p>
                             ) : (
                                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                                    {enrollmentRequests.map(request => (
-                                        <div key={request.id} className="bg-white rounded-lg shadow-md overflow-hidden">
-                                            <div className="p-4">
-                                                <h3 className="text-lg font-semibold text-blue-700 mb-2">{request.Student.name}</h3>
+                                {enrollmentRequests.map(request => (
+                                    <div key={request.id} className="bg-white rounded-lg shadow-md overflow-hidden">
+                                        <div className="p-4">
+                                            <div className="flex items-center justify-between">
+                                                <div>
+                                                    <h3 className="text-lg font-semibold text-blue-700 mb-2">{request.Student.username}</h3>
+                                                    <p className="text-gray-700">{request.Student.email}</p>
+                                                </div>
+                                                <img src={request.Student.image} alt={request.Student.username} className="w-12 h-12 rounded-full object-cover" />
+                                            </div>
+                                            <div className="mt-2">
                                                 <button
-                                                    className="mt-2 mr-2 inline-block text-green-500 hover:underline"
-                                                    onClick={() => {/* Handle accept */}}>
+                                                    className="mr-2 inline-block text-green-500 hover:underline"
+                                                    onClick={() => handleAccept(request.id)}>
                                                     Accept
                                                 </button>
                                                 <button
-                                                    className="mt-2 inline-block text-red-500 hover:underline"
-                                                    onClick={() => {/* Handle reject */}}>
+                                                    className="inline-block text-red-500 hover:underline"
+                                                    onClick={() => handleReject(request.id)}>
                                                     Reject
                                                 </button>
                                             </div>
                                         </div>
-                                    ))}
-                                </div>
+                                    </div>
+                                ))}
+                            </div>
+                            
                             )}
                         </div>
                     )}
