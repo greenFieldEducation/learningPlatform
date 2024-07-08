@@ -25,7 +25,7 @@ class Student extends Model {
       },
       gender: {
         type: DataTypes.ENUM('Men', 'Women'),
-        allowNull: false,
+        allowNull: true,
       },
       phone: {
         type: DataTypes.STRING,
@@ -39,8 +39,12 @@ class Student extends Model {
       role: {
         type: DataTypes.STRING,
         defaultValue: "student"
+      },
+      image: {
+        type: DataTypes.STRING,
+        allowNull: true,
       }
-     
+    
     }, {
       sequelize,
       modelName: 'Student',

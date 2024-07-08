@@ -3,7 +3,7 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import Navbar from '../LandingPage/Navbar.jsx';
 import axios from 'axios';
 
-const Login = () => {
+const Login = ({setId}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -17,15 +17,19 @@ const Login = () => {
         email,
         password,
       });
-      const { token, role } = response.data
-      localStorage.setItem('token', token)
-
+      console.log (response.data)
+      
+      const { token, role ,id} = response.data;
+      localStorage.setItem('token', token);
+       setId(id)
       if (role === 'instructor') {
         navigate('/instructor-dashboard')
       } else if (role === 'student') {
         navigate('/student-dashboard')
       } else {
         setError('Invalid role. Please contact support.')
+        setError('Invalid role. Please contact support.');
+
       }
     } catch (err) {
       setError('Login failed. Please try again.')
@@ -80,6 +84,14 @@ const Login = () => {
               <NavLink to="/" className="text-blue-500 hover:underline">
                 Go back to home
               </NavLink>
+            </div>
+            <div className="mt-6 text-center">
+              <p className="text-sm text-gray-600">
+                you Don't have an account?{' '}
+                <NavLink to="/signup" className="font-medium text-indigo-600 hover:text-indigo-500">
+                  Sign Up
+                </NavLink>
+              </p>
             </div>
           </form>
         </div>

@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHome, faStar, faBook, faCog, faCalendar } from '@fortawesome/free-solid-svg-icons'; // Import icons
-// import Logo from '../../assets/logo.png';
+// import Logo from '../../../asset/logo.png';
 
 const Sidebar = ({ scrollToSection }) => {
   const location = useLocation();
@@ -13,7 +13,6 @@ const Sidebar = ({ scrollToSection }) => {
     { name: 'Favorites', section: 'favorites', icon: <FontAwesomeIcon icon={faStar} /> },
     { name: 'Categories', section: 'categories', icon: <FontAwesomeIcon icon={faBook} /> },
     { name: 'Calendar', section: 'calendar', icon: <FontAwesomeIcon icon={faCalendar} /> },
-
   ];
 
   const settingsItem = {
@@ -26,7 +25,7 @@ const Sidebar = ({ scrollToSection }) => {
     <div className="sidebar fixed h-screen w-16 bg-blue-500 text-white flex flex-col items-center py-4">
       {/* Logo Placeholder (replace with your logo component) */}
       <div className="w-full mb-4 flex justify-center">
-        <img src={Logo} alt="Logo" className="w-10 h-10" />
+        <img src="" alt="Logo" className="w-10 h-10" />
       </div>
 
       {/* Navigation Items */}
@@ -49,13 +48,13 @@ const Sidebar = ({ scrollToSection }) => {
       {/* Profile Picture and Settings */}
       <div className="mt-auto flex flex-col items-center space-y-4">
         {/* Profile Picture */}
-        <a href="/student-dashboard/profile" onClick={() => setActive('profile')}>
+        <Link to="/student-dashboard/profile" onClick={() => setActive('profile')}>
           <img
             src="https://randomuser.me/api/portraits/women/8.jpg"
             className="w-10 h-10 rounded-full border-2 border-white"
             alt="Profile Picture"
           />
-        </a>
+        </Link>
         {/* Settings */}
         <div
           onClick={() => {

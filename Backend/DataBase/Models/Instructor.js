@@ -35,7 +35,9 @@ class Instructor extends Model {
         type: DataTypes.STRING,
         defaultValue: "instructor"
       },
-      
+      image: {
+        type: DataTypes.STRING, 
+      },
     }, {
       sequelize,
       modelName: 'Instructor',

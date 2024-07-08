@@ -1,5 +1,6 @@
 const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../index');
+const Instructor = require('./Instructor'); 
 
 class Course extends Model {
   static init(sequelize) {
@@ -46,7 +47,7 @@ class Course extends Model {
   }
 
   static associate(models) {
-    this.belongsTo(models.Instructor, { foreignKey: 'instructorId' });
+    this.belongsTo(models.Instructor, { foreignKey: 'instructorId' }); 
     this.hasMany(models.EnrollmentRequest, { foreignKey: 'courseId' });
   }
 }
