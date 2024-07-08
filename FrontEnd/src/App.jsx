@@ -24,7 +24,7 @@ const App = () => {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<Login setId={setId} />} />
         <Route path="/student-dashboard" element={<StudentDashboard id={id} />} />
-         <Route path="/instructor-dashboard" element={<InstructorDashboard />} /> 
+        <Route path="/instructor-dashboard" element={<InstructorDashboard />} /> 
         <Route path="/update-profile" element={<UpdateInstructorProfile />} />
         <Route path="/add-course" element={<AddCourse />} />
         <Route path="/instructor-course-detail/:id" element={<InstructorCourseDetail />} />
@@ -33,6 +33,5 @@ const App = () => {
     </Router>
   );
 };
-
 
 export default App;
