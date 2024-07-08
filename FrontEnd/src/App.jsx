@@ -6,6 +6,7 @@ import Login from './Components/Auth/Login.jsx';
 import StudentDashboard from './Components/studentDashboard/StudentDashboard.jsx';
 import InstructorDashboard from './Components/instructorDashbord.jsx';
 import CourseDetails from './Components/CourseDetail.jsx'
+import FeedbackComp from './Components/FeedbackComp.jsx'
 const App = () => (
   
   <Router>
@@ -16,6 +17,7 @@ const App = () => (
       <Route path="/student-dashboard" element={<StudentDashboard />} />
       <Route path="/instructor-dashboard" element={<InstructorDashboard />} />
       <Route path ="/course-detail/:id" element={<CourseDetails />} />
+      <Route path ="/feedback" element ={<FeedbackComp />}/>
     </Routes>
   </Router>
 );

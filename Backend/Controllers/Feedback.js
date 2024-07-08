@@ -6,8 +6,20 @@ const getAllFeedbacks = async (req, res) => {
     res.status(200).json(feedbacks)
   } catch (error) {
     res.status(500).json(error)
+    console.log(error)
   }
 }
 
-module.exports = getAllFeedbacks
+const createFeedback = async (req, res) => {
+  try {
+    const newFeedback = await Feedback.create(req.body)
+    res.status(201).json(newFeedback)
+  } catch (error) {
+    res.status(500).json(error)
+  }
+}
+
+module.exports = {createFeedback , getAllFeedbacks}
+
+
 

@@ -17,20 +17,20 @@ const Login = () => {
         email,
         password,
       });
-      const { token, role } = response.data;
-      localStorage.setItem('token', token);
+      const { token, role } = response.data
+      localStorage.setItem('token', token)
 
       if (role === 'instructor') {
-        navigate('/instructor-dashboard');
+        navigate('/instructor-dashboard')
       } else if (role === 'student') {
-        navigate('/student-dashboard');
+        navigate('/student-dashboard')
       } else {
-        setError('Invalid role. Please contact support.');
+        setError('Invalid role. Please contact support.')
       }
     } catch (err) {
-      setError('Login failed. Please try again.');
+      setError('Login failed. Please try again.')
     }
-  };
+  }
 
   return (
     <div className="bg-gray-100 text-gray-800 min-h-screen flex flex-col">
@@ -85,7 +85,7 @@ const Login = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Login;
+export default Login

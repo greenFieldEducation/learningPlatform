@@ -1,7 +1,7 @@
-const express = require('express');
-const router = express.Router();
-const getAllFeedbacks = require('../Controllers/Feedback.js');
+const express = require('express')
+const router = express.Router()
+const {getAllFeedbacks,createFeedback} = require('../Controllers/Feedback.js')
 
-router.get('/getAllFeedbacks', getAllFeedbacks);
-
-module.exports = router;
+router.get('/getAllFeedbacks', getAllFeedbacks)
+router.post('/createFeedback',createFeedback)
+module.exports = router
