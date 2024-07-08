@@ -10,11 +10,13 @@ const Student = require("./Models/Students.js")
 const Instructor = require("./Models/Instructor.js")
 const Course = require("./Models/Courses.js")
 const EnrollmentRequest = require("./Models/EnrollmentRequest.js")
+const Feedback = require("./Models/Feedback.js")
 
 Student.init(sequelize)
 Instructor.init(sequelize)
 Course.init(sequelize)
 EnrollmentRequest.init(sequelize)
+Feedback.init(sequelize)
 
 Student.associate({ EnrollmentRequest })
 Instructor.associate({ Course })

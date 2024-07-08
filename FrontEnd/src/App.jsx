@@ -1,21 +1,21 @@
-import React, { useState } from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import LandingPage from './Components/LandingPage/LandingPage.jsx';
-import SignUp from './Components/Auth/SignUp.jsx';
-import Login from './Components/Auth/Login.jsx';
-import StudentDashboard from './Components/studentDashboard/StudentDashboard.jsx';
+import React, { useState } from 'react'
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
+import LandingPage from './Components/LandingPage/LandingPage.jsx'
+import SignUp from './Components/Auth/SignUp.jsx'
+import Login from './Components/Auth/Login.jsx'
+import StudentDashboard from './Components/studentDashboard/StudentDashboard.jsx'
 import InstructorDashboard from './Components/instructorDashbord.jsx'
-import UpdateInstructorProfile from './Components/UpdateInstructorProfile.jsx';
-import AddCourse from './Components/AddCourse.jsx';
-import InstructorCourseDetail from './Components/InstructorCourseDetail.jsx';
-import StudentProfile from './Components/studentDashboard/StudentProfile.jsx';
-
+import UpdateInstructorProfile from './Components/UpdateInstructorProfile.jsx'
+import AddCourse from './Components/AddCourse.jsx'
+import InstructorCourseDetail from './Components/InstructorCourseDetail.jsx'
+import StudentProfile from './Components/studentDashboard/StudentProfile.jsx'
+import FeedbackComp from './Components/LandingPage/Feedback.jsx'
 const App = () => {
-  const [id, setStudentId] = useState();
+  const [id, setStudentId] = useState()
 
   const setId = (Id) => {
-    setStudentId(Id);
-  };
+    setStudentId(Id)
+  }
 
   return (
     <Router>
@@ -29,9 +29,10 @@ const App = () => {
         <Route path="/add-course" element={<AddCourse />} />
         <Route path="/instructor-course-detail/:id" element={<InstructorCourseDetail />} />
         <Route path="/student-dashboard/profile" element={<StudentProfile />} />
+        <Route path ='/feedbacks' element ={<FeedbackComp/>}/>
       </Routes>
     </Router>
-  );
-};
+  )
+}
 
-export default App;
+export default App

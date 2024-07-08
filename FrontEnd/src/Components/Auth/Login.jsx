@@ -23,17 +23,18 @@ const Login = ({setId}) => {
       localStorage.setItem('token', token);
        setId(id)
       if (role === 'instructor') {
-        navigate('/instructor-dashboard');
+        navigate('/instructor-dashboard')
       } else if (role === 'student') {
-        navigate('/student-dashboard');
+        navigate('/student-dashboard')
       } else {
+        setError('Invalid role. Please contact support.')
         setError('Invalid role. Please contact support.');
 
       }
     } catch (err) {
-      setError('Login failed. Please try again.');
+      setError('Login failed. Please try again.')
     }
-  };
+  }
 
   return (
     <div className="bg-gray-100 text-gray-800 min-h-screen flex flex-col">
@@ -99,4 +100,4 @@ const Login = ({setId}) => {
   )
 }
 
-export default Login;
+export default Login

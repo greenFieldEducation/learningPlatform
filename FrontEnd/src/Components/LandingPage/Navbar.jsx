@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { Link as ScrollLink } from 'react-scroll';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Navbar = ({ setSearch, setCategory }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [srch, setsearch] = useState('');
+  const navigate = useNavigate();
 
   const handleSearch = () => {
     setSearch(srch);
@@ -17,6 +18,10 @@ const Navbar = ({ setSearch, setCategory }) => {
   const handleCategorySelect = (category) => {
     setCategory(category);
     setDropdownOpen(false);
+  };
+
+  const goToFeedback = () => {
+    navigate('/feedback');
   };
 
   return (
@@ -189,16 +194,12 @@ const Navbar = ({ setSearch, setCategory }) => {
         >
           Instructors
         </ScrollLink>
-        <ScrollLink
-          to="feedback"
-          spy={true}
-          smooth={true}
-          offset={-70}
-          duration={500}
-          className="text-white hover:text-gray-300 text-lg cursor-pointer"
+        <button
+          onClick={goToFeedback}
+          className="text-white hover:text-gray-300 text-lg"
         >
           Feedback
-        </ScrollLink>
+        </button>
         <ScrollLink
           to="user-feedbacks"
           spy={true}
