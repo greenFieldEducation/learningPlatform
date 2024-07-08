@@ -20,7 +20,7 @@ const AddCourse = () => {
                 category,
                 content,
                 note,
-                instructorId
+                instructorId: 1 
             });
             console.log('Course added successfully:', response.data);
             navigate('/instructor-dashboard');

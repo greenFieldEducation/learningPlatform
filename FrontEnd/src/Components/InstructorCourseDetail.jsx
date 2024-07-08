@@ -21,7 +21,7 @@ const InstructorCourseDetail = () => {
         const fetchCourseDetail = async () => {
             try {
 
-                const response = await axios.get(`http://localhost:5000/api/course/${courseId}`);
+                const response = await axios.get(`http://localhost:5000/api/course/course/${courseId}`);
                 setCourse(response.data);
                 setUpdatedCourse(response.data); 
             } catch (error) {

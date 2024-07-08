@@ -4,7 +4,7 @@ import LandingPage from './Components/LandingPage/LandingPage.jsx';
 import SignUp from './Components/Auth/SignUp.jsx';
 import Login from './Components/Auth/Login.jsx';
 import StudentDashboard from './Components/studentDashboard/StudentDashboard.jsx';
-import InstructorDashboard from './Components/instructorDashbord.jsx';
+import InstructorDashboard from './Components/instructorDashbord.jsx'
 import UpdateInstructorProfile from './Components/UpdateInstructorProfile.jsx';
 import AddCourse from './Components/AddCourse.jsx';
 import InstructorCourseDetail from './Components/InstructorCourseDetail.jsx';

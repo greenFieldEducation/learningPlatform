@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { FaHome, FaPlus, FaEdit, FaSignOutAlt, FaBell } from 'react-icons/fa';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 const InstructorDashboard = ({ instructorName, instructorEmail, instructorImage }) => {
     const [motivationalPhrase, setMotivationalPhrase] = useState('');
@@ -22,7 +22,7 @@ const InstructorDashboard = ({ instructorName, instructorEmail, instructorImage 
 
     const fetchCourses = async () => {
         try {
-            const response = await axios.get('http://127.0.0.1:5000/api/getAllCourses');
+            const response = await axios.get('http://127.0.0.1:5000/api/course/getAllCourses');
             setCourses(response.data);
         } catch (error) {
             console.error('Error fetching courses:', error);
@@ -74,20 +74,26 @@ const InstructorDashboard = ({ instructorName, instructorEmail, instructorImage 
                     </div>
                     <p className="mt-4 text-blue-700 font-semibold">{motivationalPhrase}</p>
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {courses.map((course) => (
-                        <div key={course.id} className="bg-white shadow-md rounded p-4">
-                            <h2 className="text-xl font-semibold mb-2">{course.title}</h2>
-                            <p className="text-gray-700 mb-2">{course.description}</p>
-                            <p className="text-gray-500">{course.category}</p>
-                            <button 
-                                className="mt-4 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
-                                onClick={() => handleViewDetails(course.id)}
-                            >
-                                View Details
-                            </button>
-                        </div>
-                    ))}
+                <div className="mt-10 w-full">
+                    <h2 className="text-2xl font-semibold text-blue-700 mb-4">Courses</h2>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        {courses.map(course => (
+                            <div key={course.id} className="bg-white rounded-lg shadow-md overflow-hidden">
+                                <div className="p-4">
+                                    <h3 className="text-lg font-semibold text-blue-700 mb-2">{course.title}</h3>
+                                    <p className="text-gray-700">{course.description}</p>
+                                    <p className="text-gray-500">{course.category}</p>
+                                    <Link
+                                        to={`/instructor-course-detail/${course.id}`}
+                                        className="mt-2 inline-block text-blue-500 hover:underline"
+                                        onClick={() => handleViewDetails(course.id)} // Add onClick handler here
+                                    >
+                                        View Detail
+                                    </Link>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
                 </div>
                 <div className="mt-6">
                     <h2 className="text-xl font-semibold mb-4">Enrolled Students</h2>
