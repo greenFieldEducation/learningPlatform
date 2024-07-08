@@ -7,7 +7,7 @@ import MyCourses from './MyCourses.jsx';
 import AllCourses from './AllCourses.jsx';
 import DetailsPopUpModal from './DetailsPopUpModal.jsx';
 
-const StudentDashboard = ({id}) => {
+const StudentDashboard = ({ id }) => {
   const welcomeRef = useRef(null);
   const calendarRef = useRef(null);
   const allCoursesRef = useRef(null);
@@ -19,10 +19,22 @@ const StudentDashboard = ({id}) => {
   const [selectedCourse, setSelectedCourse] = useState(null);
 
   useEffect(() => {
-    const fetchCourses = async () => {
+    const fetchEnrolledCourses = async () => {
       try {
-        const response = await axios.get("http://127.0.0.1:5000/api/course/getAllCourses"); 
-        setCourses(response.data); 
+        const response = await axios.get(`http://localhost:5000/api/student/6/enrolledCourses`);
+        setMyCourses(response.data);
+        setLoading(false);
+      } catch (error) {
+        console.error('Failed to fetch enrolled courses:', error);
+        setError('Failed to fetch enrolled courses. Please try again later.');
+        setLoading(false);
+      }
+    };
+
+    const fetchAllCourses = async () => {
+      try {
+        const response = await axios.get("http://127.0.0.1:5000/api/course/getAllCourses");
+        setCourses(response.data);
         setLoading(false);
       } catch (error) {
         console.error('Failed to fetch courses:', error);
@@ -31,8 +43,9 @@ const StudentDashboard = ({id}) => {
       }
     };
 
-    fetchCourses();
-  }, []);
+    fetchEnrolledCourses();
+    fetchAllCourses();
+  }, [id]);
 
   const scrollToSection = (section) => {
     switch (section) {
@@ -81,8 +94,8 @@ const StudentDashboard = ({id}) => {
           <CalendarView />
         </div>
         {selectedCourse && (
-          <DetailsPopUpModal 
-            id ={id}
+          <DetailsPopUpModal
+            id={id}
             isOpen={!!selectedCourse}
             onClose={() => setSelectedCourse(null)}
             course={selectedCourse}
