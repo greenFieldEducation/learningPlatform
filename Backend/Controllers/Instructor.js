@@ -45,6 +45,7 @@ const updateInstructorProfile = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 };
+
 const uploadProfileImage = async (req, res) => {
     const { id } = req.params;
     try {

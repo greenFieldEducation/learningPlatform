@@ -14,6 +14,7 @@ router.post('/instructors/:instructorId/createCourse', createCourse);
 router.put('/instructors/:id',updateInstructorProfile);
 router.post('/instructors/:id/upload', upload.single('file'), uploadProfileImage);
 router.delete('/instructors/:instructorId/courses/:courseId', deleteCourse);
+
 router.put('/instructors/:instructorId/courses/:courseId', UpdateCourse);
 
 module.exports = router;
