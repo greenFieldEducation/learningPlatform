@@ -11,10 +11,12 @@ const getAllFeedbacks = async (req, res) => {
 }
 
 const createFeedback = async (req, res) => {
+  console.log(req.body);
   try {
     const newFeedback = await Feedback.create(req.body)
     res.status(201).json(newFeedback)
   } catch (error) {
+    console.log(error);
     res.status(500).json(error)
   }
 }

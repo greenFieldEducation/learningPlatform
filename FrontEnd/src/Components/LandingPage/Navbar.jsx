@@ -1,22 +1,11 @@
-<<<<<<< HEAD
-import React from 'react'
-import { Link as ScrollLink } from 'react-scroll'
-import { useNavigate } from 'react-router-dom'
-
-const Navbar = () => {
-  const navigate = useNavigate()
-
-  const handleFeedbackClick = () => {
-    navigate('/feedback')
-  }
-=======
 import React, { useState } from 'react';
 import { Link as ScrollLink } from 'react-scroll';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Navbar = ({ setSearch, setCategory }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [srch, setsearch] = useState('');
+  const navigate = useNavigate();
 
   const handleSearch = () => {
     setSearch(srch);
@@ -30,21 +19,14 @@ const Navbar = ({ setSearch, setCategory }) => {
     setCategory(category);
     setDropdownOpen(false);
   };
->>>>>>> 918ef6bfe4ae3921687b1a413e3264fe0dd5dfd5
+
+  const goToFeedback = () => {
+    navigate('/feedback');
+  };
 
   return (
     <nav className="bg-blue-600 p-4 flex items-center justify-between">
       <div className="flex items-center space-x-8">
-<<<<<<< HEAD
-        <img src="https://r2.erweima.ai/i/jRTXCGIYQUyj6vG6vuj6xA.jpg" alt="Learniverse Logo" className="h-20" />
-        <div className="flex items-center space-x-4">
-          <input
-            type="text"
-            placeholder="Search..."
-            className="px-3 py-2 border rounded-md focus:outline-none"
-          />
-          <button className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md">
-=======
         <div className="text-white text-2xl font-bold">Learniverse</div>
         <div className="flex items-center space-x-4">
           <input
@@ -58,7 +40,6 @@ const Navbar = ({ setSearch, setCategory }) => {
             className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md"
             onClick={handleSearch}
           >
->>>>>>> 918ef6bfe4ae3921687b1a413e3264fe0dd5dfd5
             <svg
               className="h-5 w-5 text-white"
               fill="none"
@@ -76,10 +57,7 @@ const Navbar = ({ setSearch, setCategory }) => {
           </button>
         </div>
       </div>
-<<<<<<< HEAD
-=======
 
->>>>>>> 918ef6bfe4ae3921687b1a413e3264fe0dd5dfd5
       <div className="flex items-center space-x-8">
         <ScrollLink
           to="home"
@@ -91,18 +69,6 @@ const Navbar = ({ setSearch, setCategory }) => {
         >
           Home
         </ScrollLink>
-<<<<<<< HEAD
-        <ScrollLink
-          to="courses"
-          spy={true}
-          smooth={true}
-          offset={-70}
-          duration={500}
-          className="text-white hover:text-gray-300 text-lg cursor-pointer"
-        >
-          Courses
-        </ScrollLink>
-=======
 
         {/* Courses dropdown */}
         <div className="relative">
@@ -218,7 +184,6 @@ const Navbar = ({ setSearch, setCategory }) => {
         </div>
         {/* End of Courses dropdown */}
 
->>>>>>> 918ef6bfe4ae3921687b1a413e3264fe0dd5dfd5
         <ScrollLink
           to="instructors"
           spy={true}
@@ -229,25 +194,12 @@ const Navbar = ({ setSearch, setCategory }) => {
         >
           Instructors
         </ScrollLink>
-<<<<<<< HEAD
-        <div
-          onClick={handleFeedbackClick}
-          className="text-white hover:text-gray-300 text-lg cursor-pointer"
+        <button
+          onClick={goToFeedback}
+          className="text-white hover:text-gray-300 text-lg"
         >
           Feedback
-        </div>
-=======
-        <ScrollLink
-          to="feedback"
-          spy={true}
-          smooth={true}
-          offset={-70}
-          duration={500}
-          className="text-white hover:text-gray-300 text-lg cursor-pointer"
-        >
-          Feedback
-        </ScrollLink>
->>>>>>> 918ef6bfe4ae3921687b1a413e3264fe0dd5dfd5
+        </button>
         <ScrollLink
           to="user-feedbacks"
           spy={true}
@@ -262,12 +214,7 @@ const Navbar = ({ setSearch, setCategory }) => {
         <Link to="/signup" className="text-white hover:text-gray-300 text-lg">Signup</Link>
       </div>
     </nav>
-<<<<<<< HEAD
-  )
-}
-=======
   );
 };
->>>>>>> 918ef6bfe4ae3921687b1a413e3264fe0dd5dfd5
 
-export default Navbar
+export default Navbar;
